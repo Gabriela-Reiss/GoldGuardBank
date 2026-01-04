@@ -1,0 +1,160 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\gabis\\source\\repos\\BankSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.domain\\model\\conta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|solutionrelative:banksystem.domain\\model\\conta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3180A724-88C1-4ACA-971F-81F52A073021}|BankSystem.Infraestructure\\BankSystem.Infraestructure.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.infraestructure\\repositories\\implementations\\contarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3180A724-88C1-4ACA-971F-81F52A073021}|BankSystem.Infraestructure\\BankSystem.Infraestructure.csproj|solutionrelative:banksystem.infraestructure\\repositories\\implementations\\contarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.domain\\repositories\\interfaces\\icontarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|solutionrelative:banksystem.domain\\repositories\\interfaces\\icontarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.domain\\model\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|solutionrelative:banksystem.domain\\model\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.domain\\repositories\\interfaces\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|solutionrelative:banksystem.domain\\repositories\\interfaces\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.domain\\uow\\interfaces\\iunityofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|solutionrelative:banksystem.domain\\uow\\interfaces\\iunityofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.domain\\model\\transacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38D237E4-2695-40CF-BF44-66213E3336A9}|BankSystem.Domain\\BankSystem.Domain.csproj|solutionrelative:banksystem.domain\\model\\transacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3180A724-88C1-4ACA-971F-81F52A073021}|BankSystem.Infraestructure\\BankSystem.Infraestructure.csproj|c:\\users\\gabis\\source\\repos\\banksystem\\banksystem.infraestructure\\repositories\\implementations\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3180A724-88C1-4ACA-971F-81F52A073021}|BankSystem.Infraestructure\\BankSystem.Infraestructure.csproj|solutionrelative:banksystem.infraestructure\\repositories\\implementations\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 100,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Model\\Usuario.cs",
+              "RelativeDocumentMoniker": "BankSystem.Domain\\Model\\Usuario.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Model\\Usuario.cs",
+              "RelativeToolTip": "BankSystem.Domain\\Model\\Usuario.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T22:02:00.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IUnityOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Uow\\Interfaces\\IUnityOfWork.cs",
+              "RelativeDocumentMoniker": "BankSystem.Domain\\Uow\\Interfaces\\IUnityOfWork.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Uow\\Interfaces\\IUnityOfWork.cs",
+              "RelativeToolTip": "BankSystem.Domain\\Uow\\Interfaces\\IUnityOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T22:01:07.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Transacao.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Model\\Transacao.cs",
+              "RelativeDocumentMoniker": "BankSystem.Domain\\Model\\Transacao.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Model\\Transacao.cs",
+              "RelativeToolTip": "BankSystem.Domain\\Model\\Transacao.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T21:49:41.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Conta.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Model\\Conta.cs",
+              "RelativeDocumentMoniker": "BankSystem.Domain\\Model\\Conta.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Model\\Conta.cs",
+              "RelativeToolTip": "BankSystem.Domain\\Model\\Conta.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowBgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T21:48:24.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UsuarioRepository.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Infraestructure\\Repositories\\Implementations\\UsuarioRepository.cs",
+              "RelativeDocumentMoniker": "BankSystem.Infraestructure\\Repositories\\Implementations\\UsuarioRepository.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Infraestructure\\Repositories\\Implementations\\UsuarioRepository.cs",
+              "RelativeToolTip": "BankSystem.Infraestructure\\Repositories\\Implementations\\UsuarioRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T21:47:07.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ContaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Infraestructure\\Repositories\\Implementations\\ContaRepository.cs",
+              "RelativeDocumentMoniker": "BankSystem.Infraestructure\\Repositories\\Implementations\\ContaRepository.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Infraestructure\\Repositories\\Implementations\\ContaRepository.cs",
+              "RelativeToolTip": "BankSystem.Infraestructure\\Repositories\\Implementations\\ContaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T21:46:19.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IContaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Repositories\\Interfaces\\IContaRepository.cs",
+              "RelativeDocumentMoniker": "BankSystem.Domain\\Repositories\\Interfaces\\IContaRepository.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Repositories\\Interfaces\\IContaRepository.cs",
+              "RelativeToolTip": "BankSystem.Domain\\Repositories\\Interfaces\\IContaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T21:44:12.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IUsuarioRepository.cs",
+              "DocumentMoniker": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Repositories\\Interfaces\\IUsuarioRepository.cs",
+              "RelativeDocumentMoniker": "BankSystem.Domain\\Repositories\\Interfaces\\IUsuarioRepository.cs",
+              "ToolTip": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\Repositories\\Interfaces\\IUsuarioRepository.cs",
+              "RelativeToolTip": "BankSystem.Domain\\Repositories\\Interfaces\\IUsuarioRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T21:43:52.682Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
