@@ -25,6 +25,10 @@ public class Conta
     [Range(0, double.MaxValue)]
     public decimal SaldoTotal { get; private set; }
 
+    [Required]
+    [StringLength(12)]
+    public string NumeroConta { get; private set; } = string.Empty;
+
     public DateTime DataCriacao { get; set; } = DateTime.Now;
 
     public ICollection<Transacao>? Transacoes { get; set; }
@@ -34,6 +38,7 @@ public class Conta
     public Conta()
     {
         SaldoTotal = 0;
+        NumeroConta = GerarNumeroConta();
     }
 
     public void Creditar(decimal valor)
@@ -59,6 +64,12 @@ public class Conta
         }
 
         SaldoTotal -= valor;
+    }
+
+    private static string GerarNumeroConta()
+    {
+        // Ex: 437921045381
+        return Random.Shared.NextInt64(100_000_000_000, 999_999_999_999).ToString();
     }
 
 }

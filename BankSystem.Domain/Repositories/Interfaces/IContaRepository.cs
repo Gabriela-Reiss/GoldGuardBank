@@ -5,9 +5,13 @@ namespace BankSystem.Domain.Repositories.Interfaces;
 
 public interface IContaRepository : IGenericRepository<Conta>
 {
-    Task<IEnumerable<Conta>> GetContasByUsuarioId(int usuarioId);
+    Task<Conta> GetContaByUsuarioId(int usuarioId);
 
-    Task<Conta?> ObterContaCompletaAsync(int contaId);
-    Task<IEnumerable<Conta>> GetContasByUsuarioIdAndTipo(int usuarioId, TipoConta tipo);
+    Task<Conta?> ObterContaCompletaAsync(int usuarioId);
+
     
+    Task<Conta?> GetContasByUsuarioIdAndTipo(int usuarioId, TipoConta tipo);
+    Task<Conta?> GetByNumeroContaAsync(string numeroConta);
+
+
 }

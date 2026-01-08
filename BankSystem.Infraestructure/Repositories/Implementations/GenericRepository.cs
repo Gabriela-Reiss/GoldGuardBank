@@ -15,25 +15,31 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _dbSet = _context.Set<T>();
     }
 
-    public void Add(T entity)
+    public async Task AddAsync(T entity)
     {
         _dbSet.Add(entity);
     }
+
+  
 
     public void Delete(T entity)
     {
         _dbSet.Remove(entity);
     }
 
-    public IEnumerable<T> GetAll()
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
         return _dbSet.ToList();
     }
 
-    public T GetById(int id)
+    
+
+    public async Task<T?> GetByIdAsync(int id)
     {
         return _dbSet.Find(id);
     }
+
+    
 
     public void Update(T entity)
     {

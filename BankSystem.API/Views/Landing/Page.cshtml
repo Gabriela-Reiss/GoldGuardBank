@@ -1,0 +1,490 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Guard Bank - Segurança Financeira Inteligente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --black: #212121;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray-dark: #757575;
+            --gradient-dark: linear-gradient(135deg, var(--black) 0%, #333333 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+            .logo-text span {
+                color: var(--gold-dark);
+            }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-nav {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--black);
+            border: 2px solid var(--gray-light);
+        }
+
+            .btn-login:hover {
+                background: var(--gray-light);
+                color: var(--black);
+            }
+
+        .btn-signup {
+            background: var(--gradient-dark);
+            color: var(--white);
+            border: 2px solid transparent;
+        }
+
+            .btn-signup:hover {
+                background: linear-gradient(135deg, #333333 0%, var(--black) 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                color: var(--white);
+            }
+
+      
+        .hero {
+            padding: 180px 20px 100px;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--gray-light) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 52px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+            .hero-content h1 span {
+                color: var(--gold-dark);
+                position: relative;
+            }
+
+                .hero-content h1 span::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 5px;
+                    left: 0;
+                    width: 100%;
+                    height: 8px;
+                    background: rgba(212, 175, 55, 0.2);
+                    z-index: -1;
+                }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--gray-dark);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .main-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: transform 0.5s ease;
+        }
+
+            .main-image:hover {
+                transform: perspective(1000px) rotateY(0deg);
+            }
+
+        .features {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+            .section-title span {
+                color: var(--gold-dark);
+            }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-dark);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
+                border-color: var(--gold);
+            }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: var(--gold);
+            font-size: 28px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .feature-description {
+            color: var(--gray-dark);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+      
+        .footer {
+            background: var(--gradient-dark);
+            color: var(--white);
+            padding: 60px 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+            .footer-links li {
+                margin-bottom: 10px;
+            }
+
+            .footer-links a {
+                color: rgba(255, 255, 255, 0.8);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+                .footer-links a:hover {
+                    color: var(--gold);
+                }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="logo-text">Gold <span>Guard</span></div>
+            </a>
+            <div class="nav-buttons">
+                <a asp-controller="Login" asp-action="Index" class="btn-nav btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </a>
+                <a asp-controller="Usuario" asp-action="Register" class="btn-nav btn-signup">
+                    <i class="fas fa-user-plus me-2"></i>Criar Conta
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Seu dinheiro protegido com <span>segurança inteligente</span></h1>
+                <p>Gold Guard oferece a solução bancária mais segura e moderna do mercado. Gerencie suas finanças com tecnologia de ponta e proteção 24/7.</p>
+                <div class="hero-buttons">
+                    <a href="/Cadastro" class="btn-nav btn-signup" style="display: inline-block; margin-right: 15px;">
+                        <i class="fas fa-rocket me-2"></i>Comece Agora
+                    </a>
+                    <a href="#features" class="btn-nav btn-login" style="display: inline-block;">
+                        <i class="fas fa-play-circle me-2"></i>Saiba Mais
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dashboard Gold Guard" class="main-image">
+                <div style="position: absolute; bottom: -20px; right: -20px; background: var(--gradient-dark); color: var(--gold); padding: 15px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <i class="fas fa-shield-alt fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2 class="section-title">Por que escolher o <span>Gold Guard</span>?</h2>
+            <p class="section-subtitle">Tecnologia avançada e segurança incomparável para suas transações financeiras</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Segurança Máxima</h3>
+                <p class="feature-description">
+                    Sistema de criptografia de última geração com verificação biométrica e autenticação de dois fatores. Suas transações estão sempre protegidas contra ameaças.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Transações Rápidas</h3>
+                <p class="feature-description">
+                    Realize transferências, depósitos e saques em tempo real. Tecnologia que processa suas operações em milissegundos, sem burocracia.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Controle Total</h3>
+                <p class="feature-description">
+                    Dashboard intuitivo que mostra todas as suas movimentações em tempo real. Tome decisões financeiras com informações precisas e atualizadas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+   
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Gold Guard</h4>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
+                    Segurança bancária redefinida. Tecnologia que protege seu patrimônio.
+                </p>
+                <div style="display: flex; gap: 15px; font-size: 20px;">
+                    <a href="#" style="color: var(--gold);"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: var(--gold);"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: var(--gold);"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: var(--gold);"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Links Rápidos</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#features">Serviços</a></li>
+                    <li><a href="/Login">Área do Cliente</a></li>
+                    <li><a href="/Cadastro">Abra sua Conta</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone me-2"></i> (11) 9999-9999</li>
+                    <li><i class="fas fa-envelope me-2"></i> contato@goldguard.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i> São Paulo, SP</li>
+                    <li><i class="fas fa-clock me-2"></i> 24/7 Suporte</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Gold Guard Bank. Todos os direitos reservados.</p>
+            <p style="font-size: 12px; margin-top: 10px;">Sistema financeiro autorizado e regulamentado.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+           
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+           
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.12)';
+                    navbar.style.padding = '15px 0';
+                } else {
+                    navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+                    navbar.style.padding = '20px 0';
+                }
+            });
+
+          
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+           
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

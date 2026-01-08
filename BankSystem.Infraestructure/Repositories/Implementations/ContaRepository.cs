@@ -12,25 +12,43 @@ public class ContaRepository : GenericRepository<Conta>, IContaRepository
     {
 
     }
-   
-    public async Task<IEnumerable<Conta>> GetContasByUsuarioId(int usuarioId)
-    {
-        
 
-        return _dbSet.Where(c => c.UsuarioId == usuarioId).ToList();
-    }
-
-    public async Task<IEnumerable<Conta>> GetContasByUsuarioIdAndTipo(int usuarioId, TipoConta tipo)
-    {
-        return _dbSet.Where(c => c.UsuarioId == usuarioId && c.Tipo == tipo).ToList();
-    }
-
-    public async Task<Conta?> ObterContaCompletaAsync(int contaId)
+    public async Task<Conta?> GetByNumeroContaAsync(string numeroConta)
     {
         return await _context.Contas
             .Include(c => c.Transacoes)
-            .Include(c => c.Investimentos)
-                .ThenInclude(i => i.Ativo)
-            .FirstOrDefaultAsync(c => c.Id == contaId);
+            .FirstOrDefaultAsync(c => c.NumeroConta == numeroConta);
     }
+
+
+    public async Task<Conta?> GetContaByUsuarioId(int usuarioId)
+    {
+        return await _context.Contas
+            .Include(c => c.Usuario)
+            .FirstOrDefaultAsync(c => c.UsuarioId == usuarioId);
+    }
+
+
+
+    public async Task<Conta?> GetContasByUsuarioIdAndTipo(
+    int usuarioId,
+    TipoConta tipo)
+    {
+        return await _context.Contas
+            .FirstOrDefaultAsync(c =>
+                c.UsuarioId == usuarioId &&
+                c.Tipo == tipo);
+    }
+
+    
+
+    public async Task<Conta?> ObterContaCompletaAsync(int usuarioId)
+    {
+        return await _context.Contas
+            .Include(c => c.Usuario)
+            .Include(c => c.Transacoes)
+            .FirstOrDefaultAsync(c => c.UsuarioId == usuarioId);
+    }
+
+    
 }

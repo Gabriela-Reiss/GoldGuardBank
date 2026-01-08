@@ -1,0 +1,27 @@
+﻿@model IEnumerable<BankSystem.Domain.Model.Investimento>
+
+<h3>📈 Meus Investimentos</h3>
+
+<a asp-action="Perfis" class="btn btn-primary mt-3">
+    ➕ Investir
+</a>
+
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>Ativo</th>
+            <th>Quantidade</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var inv in Model)
+        {
+            <tr>
+                <td>@inv.Ativo.Nome</td>
+                <td>@inv.Quantidade</td>
+                <td>R$ @inv.PrecoCompra.ToString("N2")</td>
+            </tr>
+        }
+    </tbody>
+</table>

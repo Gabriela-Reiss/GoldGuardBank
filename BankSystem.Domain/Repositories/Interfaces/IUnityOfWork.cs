@@ -1,6 +1,4 @@
-﻿using BankSystem.Domain.Repositories.Interfaces;
-
-namespace BankSystem.Domain.Uow.Interfaces;
+﻿namespace BankSystem.Domain.Repositories.Interfaces;
 
 public interface IUnityOfWork : IDisposable
 {
@@ -10,6 +8,7 @@ public interface IUnityOfWork : IDisposable
     IAtivoRepository Ativos { get; }
     ITransacaoRepository Transacoes { get; }
     IInvestimentoRepository Investimentos { get; }
+    ILoginRepository Logins { get; }
 
     Task CommitAsync();
 

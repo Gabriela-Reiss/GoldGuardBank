@@ -1,0 +1,928 @@
+﻿@using BankSystem.Domain.Model.Enums
+@model BankSystem.Application.DTOs.RegistroUsuarioDto
+
+@{
+    ViewData["Title"] = "Cadastro | Gold Guard";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --red: #D32F2F;
+            --red-dark: #B71C1C;
+            --black: #212121;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #E0E0E0;
+            --gray-dark: #757575;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--gray-light) 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .centralized-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .register-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+            padding: 50px;
+            width: 100%;
+            max-width: 600px; /* Aumentado de 500px para 600px */
+            animation: fadeInUp 0.6s ease-out;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+        }
+
+        /* Efeito de brilho nas bordas */
+        .register-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255, 215, 0, 0.1),
+                rgba(212, 175, 55, 0.05),
+                rgba(255, 215, 0, 0.1));
+            border-radius: 22px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        /* Header do Cadastro */
+        .register-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .register-icon-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+        }
+
+        .register-icon {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-size: 36px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .register-title {
+            color: var(--black);
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+            .register-title span {
+                color: var(--gold-dark);
+            }
+
+        .register-subtitle {
+            color: var(--gray-dark);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* Barra de Progresso */
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            width: 100%;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gray);
+            z-index: 1;
+            transform: translateY(-50%);
+            transition: background 0.3s ease;
+        }
+
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 2px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-dark);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+            .progress-step.active {
+                background: var(--gold);
+                border-color: var(--gold);
+                color: var(--black);
+            }
+
+            .progress-step.completed {
+                background: var(--gold-dark);
+                border-color: var(--gold-dark);
+                color: var(--white);
+            }
+
+        .step-label {
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 13px;
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+            .step-label.active {
+                color: var(--black);
+                font-weight: 600;
+            }
+
+        /* Formulário */
+        .register-form {
+            width: 100%;
+        }
+
+        .form-container {
+            display: none;
+            width: 100%;
+        }
+
+            .form-container.active {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+
+        .form-title {
+            color: var(--black);
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        /* Campos do Formulário - AUMENTADOS */
+        .form-group-register {
+            margin-bottom: 24px;
+        }
+
+        .form-label-register {
+            color: var(--black);
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 15px;
+        }
+
+            .form-label-register.required::after {
+                content: " *";
+                color: var(--red);
+            }
+
+        .input-container-register {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-icon-register {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+        .form-input-register,
+        .form-select-register {
+            width: 100%;
+            padding: 18px 25px 25px 55px; /* Aumentado padding */
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            font-size: 16px; /* Aumentado de 14px */
+            background: var(--white);
+            color: var(--black);
+            transition: all 0.3s;
+            font-weight: 400;
+            min-height: 56px; /* Altura mínima aumentada */
+            box-sizing: border-box;
+        }
+
+        .form-select-register {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23757575' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 16px 12px;
+            padding-right: 50px;
+        }
+
+            .form-input-register:focus,
+            .form-select-register:focus {
+                outline: none;
+                border-color: var(--gold);
+                box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
+            }
+
+            .form-input-register:hover,
+            .form-select-register:hover {
+                border-color: var(--gold);
+            }
+
+            .form-input-register::placeholder {
+                color: var(--gray-dark);
+                opacity: 0.7;
+                font-size: 12.8px; 
+            }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-dark);
+            cursor: pointer;
+            padding: 8px; /* Aumentado padding */
+            z-index: 2;
+            transition: color 0.3s;
+            font-size: 18px; /* Ícone maior */
+        }
+
+            .password-toggle:hover {
+                color: var(--gold-dark);
+            }
+
+        /* Layout de colunas para alguns campos */
+        .row-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px; /* Aumentado gap */
+        }
+
+        /* Botões de Navegação */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .btn-next,
+        .btn-back,
+        .btn-submit {
+            padding: 18px 35px; /* Aumentado padding */
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px; /* Fonte maior */
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 56px; /* Altura mínima */
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--black);
+        }
+
+            .btn-next:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+            }
+
+        .btn-back {
+            background: var(--gray-light);
+            color: var(--black);
+            border: 2px solid var(--gray);
+        }
+
+            .btn-back:hover {
+                background: var(--gray);
+                border-color: var(--gold);
+            }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--black);
+        }
+
+            .btn-submit:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+            }
+
+        /* Link para Login */
+        .login-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .login-text {
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+            font-size: 16px; /* Fonte maior */
+        }
+
+        .btn-login-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px; /* Gap maior */
+            padding: 16px 35px; /* Padding maior */
+            background: var(--white);
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            color: var(--black);
+            font-weight: 600;
+            font-size: 16px; /* Fonte maior */
+            text-decoration: none;
+            transition: all 0.3s;
+            min-height: 56px; /* Altura mínima */
+        }
+
+            .btn-login-link:hover {
+                background: var(--gray-light);
+                border-color: var(--gold);
+                color: var(--black);
+                text-decoration: none;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Validação */
+        .validation-error {
+            color: var(--red);
+            font-size: 14px; /* Fonte maior */
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-error {
+            border-color: var(--red) !important;
+            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1) !important;
+        }
+
+        
+
+        /* Efeitos de foco */
+        .input-focused .input-icon-register {
+            color: var(--gold-dark);
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="centralized-container">
+        <div class="register-card">
+            <!-- Header do Cadastro -->
+            <div class="register-header">
+                <div class="register-icon-container">
+                    <div class="register-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                </div>
+                
+                <h1 class="register-title">Criar <span>Conta</span></h1>
+                <p class="register-subtitle">Gold Guard - Sua segurança financeira começa aqui</p>
+            </div>
+
+            <!-- Barra de Progresso -->
+            <div class="form-progress">
+                <div class="progress-line"></div>
+                <div class="progress-step active" id="step1">
+                    1
+                    <span class="step-label active">Dados Pessoais</span>
+                </div>
+                <div class="progress-step" id="step2">
+                    2
+                    <span class="step-label">Endereço & Conta</span>
+                </div>
+            </div>
+
+            <form asp-controller="Usuario" asp-action="Register" method="post" id="registerForm" class="register-form">
+                @Html.AntiForgeryToken()
+
+                <!-- Formulário 1: Dados Pessoais -->
+                <div class="form-container active mt-5" id="formStep1">
+                    <h3 class="form-title">Informações Pessoais</h3>
+
+                    <!-- Nome Completo -->
+                    <div class="form-group-register">
+                        <label class="form-label-register required">Nome Completo</label>
+                        <div class="input-container-register" id="nomeContainer">
+                            <div class="input-icon-register">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <input asp-for="Nome" 
+                                   class="form-input-register" 
+                                   id="nomeInput"
+                                   placeholder="Digite seu nome completo"
+                                   required />
+                        </div>
+                        <span asp-validation-for="Nome" class="validation-error"></span>
+                    </div>
+
+                    <!-- CPF e Telefone -->
+                    <div class="row-inputs">
+                        <div class="form-group-register">
+                            <label class="form-label-register required">CPF</label>
+                            <div class="input-container-register" id="cpfContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <input asp-for="CPF" 
+                                       class="form-input-register" 
+                                       id="cpfInput"
+                                       placeholder="000.000.000-00"
+                                       required />
+                            </div>
+                            <span asp-validation-for="CPF" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group-register">
+                            <label class="form-label-register required">Telefone</label>
+                            <div class="input-container-register" id="telefoneContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <input asp-for="Telefone" 
+                                       class="form-input-register" 
+                                       id="telefoneInput"
+                                       placeholder="(00) 00000-0000"
+                                       required />
+                            </div>
+                            <span asp-validation-for="Telefone" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group-register">
+                        <label class="form-label-register required">Email</label>
+                        <div class="input-container-register" id="emailContainer">
+                            <div class="input-icon-register">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <input asp-for="Email" 
+                                   class="form-input-register" 
+                                   id="emailInput"
+                                   placeholder="seu.email@exemplo.com"
+                                   required />
+                        </div>
+                        <span asp-validation-for="Email" class="validation-error"></span>
+                    </div>
+
+                    <!-- Senha e Confirmação -->
+                    <div class="row-inputs">
+                        <div class="form-group-register">
+                            <label class="form-label-register required">Senha</label>
+                            <div class="input-container-register" id="senhaContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <input asp-for="Senha" 
+                                       type="password" 
+                                       class="form-input-register" 
+                                       id="senhaInput"
+                                       placeholder="Mínimo 6 caracteres"
+                                       required />
+                                <button type="button" class="password-toggle" data-target="senhaInput">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="Senha" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group-register">
+                            <label class="form-label-register required">Confirmar Senha</label>
+                            <div class="input-container-register" id="confirmSenhaContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <input type="password" 
+                                       class="form-input-register" 
+                                       id="confirmSenhaInput"
+                                       placeholder="Confirme sua senha"
+                                       required />
+                                <button type="button" class="password-toggle" data-target="confirmSenhaInput">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div id="senhaMatchError" class="validation-error" style="display: none;">
+                                <i class="fas fa-exclamation-circle"></i> As senhas não coincidem
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão Próximo -->
+                    <div class="form-actions">
+                        <div></div> <!-- Espaço vazio para alinhamento -->
+                        <button type="button" class="btn-next" onclick="nextStep()">
+                            Próximo <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Formulário 2: Endereço e Conta -->
+                <div class="form-container" id="formStep2">
+                    <h3 class="form-title mt-5">Informações de Endereço e Conta</h3>
+
+                    <!-- Logradouro -->
+                    <div class="form-group-register">
+                        <label class="form-label-register required">Logradouro</label>
+                        <div class="input-container-register" id="logradouroContainer">
+                            <div class="input-icon-register">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <input asp-for="Endereco.Logradouro" 
+                                   class="form-input-register" 
+                                   id="logradouroInput"
+                                   placeholder="Nome da rua, avenida, etc."
+                                   required />
+                        </div>
+                        <span asp-validation-for="Endereco.Logradouro" class="validation-error"></span>
+                    </div>
+
+                    <!-- Bairro e CEP -->
+                    <div class="row-inputs">
+                        <div class="form-group-register">
+                            <label class="form-label-register required">Bairro</label>
+                            <div class="input-container-register" id="bairroContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <input asp-for="Endereco.Bairro" 
+                                       class="form-input-register" 
+                                       id="bairroInput"
+                                       placeholder="Nome do bairro"
+                                       required />
+                            </div>
+                            <span asp-validation-for="Endereco.Bairro" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group-register">
+                            <label class="form-label-register required">CEP</label>
+                            <div class="input-container-register" id="cepContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-mail-bulk"></i>
+                                </div>
+                                <input asp-for="Endereco.CEP" 
+                                       class="form-input-register" 
+                                       id="cepInput"
+                                       placeholder="00000-000"
+                                       required />
+                            </div>
+                            <span asp-validation-for="Endereco.CEP" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Cidade e Estado -->
+                    <div class="row-inputs">
+                        <div class="form-group-register">
+                            <label class="form-label-register required">Cidade</label>
+                            <div class="input-container-register" id="cidadeContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-city"></i>
+                                </div>
+                                <input asp-for="Endereco.Cidade" 
+                                       class="form-input-register" 
+                                       id="cidadeInput"
+                                       placeholder="Nome da cidade"
+                                       required />
+                            </div>
+                            <span asp-validation-for="Endereco.Cidade" class="validation-error"></span>
+                        </div>
+
+                        <div class="form-group-register">
+                            <label class="form-label-register required">Estado</label>
+                            <div class="input-container-register" id="estadoContainer">
+                                <div class="input-icon-register">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <input asp-for="Endereco.Estado" 
+                                       class="form-input-register" 
+                                       id="estadoInput"
+                                       placeholder="Sigla (ex: SP)"
+                                       maxlength="2"
+                                       required />
+                            </div>
+                            <span asp-validation-for="Endereco.Estado" class="validation-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Tipo de Conta -->
+                    <div class="form-group-register">
+                        <label class="form-label-register required">Tipo de Conta</label>
+                        <div class="input-container-register" id="tipoContaContainer">
+                            <div class="input-icon-register">
+                                <i class="fas fa-piggy-bank"></i>
+                            </div>
+                            <select asp-for="TipoConta" 
+                                    class="form-select-register"
+                                    asp-items="Html.GetEnumSelectList<TipoConta>()"
+                                    id="tipoContaSelect"
+                                    required>
+                                <option value="">Escolha o tipo de conta</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="TipoConta" class="validation-error"></span>
+                    </div>
+
+                    
+
+                    <!-- Botões Voltar e Finalizar -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="prevStep()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-check-circle"></i> Finalizar Cadastro
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Link para Login -->
+            <div class="login-section">
+                <p class="login-text">Já tem uma conta?</p>
+                <a asp-controller="Login" asp-action="Index" class="btn-login-link">
+                    <i class="fas fa-sign-in-alt"></i> Entre na sua conta
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentStep = 1;
+        const totalSteps = 2;
+
+        function nextStep() {
+            if (currentStep === 1 && !validateStep1()) {
+                return;
+            }
+
+            if (currentStep < totalSteps) {
+                document.getElementById(`formStep${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.add('completed');
+
+                currentStep++;
+
+                document.getElementById(`formStep${currentStep}`).classList.add('active');
+                document.getElementById(`step${currentStep}`).classList.add('active');
+
+                updateProgressBar();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`formStep${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+
+                currentStep--;
+
+                document.getElementById(`formStep${currentStep}`).classList.add('active');
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                document.getElementById(`step${currentStep}`).classList.remove('completed');
+
+                updateProgressBar();
+            }
+        }
+
+        function updateProgressBar() {
+            const progressLine = document.querySelector('.progress-line');
+            const width = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressLine.style.background = `linear-gradient(to right, var(--gold) 0%, var(--gold) ${width}%, var(--gray) ${width}%, var(--gray) 100%)`;
+        }
+
+        function validateStep1() {
+            const senha = document.getElementById('senhaInput').value;
+            const confirmSenha = document.getElementById('confirmSenhaInput').value;
+            const senhaMatchError = document.getElementById('senhaMatchError');
+
+            if (senha !== confirmSenha) {
+                senhaMatchError.style.display = 'flex';
+                document.getElementById('confirmSenhaInput').classList.add('input-error');
+                return false;
+            } else {
+                senhaMatchError.style.display = 'none';
+                document.getElementById('confirmSenhaInput').classList.remove('input-error');
+                return true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Formatação automática dos campos
+            formatarCPF(document.getElementById('cpfInput'));
+            formatarTelefone(document.getElementById('telefoneInput'));
+            formatarCEP(document.getElementById('cepInput'));
+            formatarDinheiro(document.getElementById('depositoInput'));
+
+            // Mostrar/ocultar senha
+            document.querySelectorAll('.password-toggle').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetInput = document.getElementById(targetId);
+                    if (targetInput) {
+                        const type = targetInput.type === 'password' ? 'text' : 'password';
+                        targetInput.type = type;
+                        this.innerHTML = type === 'password'
+                            ? '<i class="fas fa-eye"></i>'
+                            : '<i class="fas fa-eye-slash"></i>';
+                    }
+                });
+            });
+
+            // Verificar senha em tempo real
+            const confirmSenhaInput = document.getElementById('confirmSenhaInput');
+            if (confirmSenhaInput) {
+                confirmSenhaInput.addEventListener('input', validateStep1);
+            }
+
+            // Efeitos de foco nos inputs
+            document.querySelectorAll('.form-input-register, .form-select-register').forEach(input => {
+                const container = input.closest('.input-container-register');
+                
+                input.addEventListener('focus', function() {
+                    if (container) {
+                        container.classList.add('input-focused');
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    if (container) {
+                        container.classList.remove('input-focused');
+                    }
+                });
+            });
+
+            // Inicializar barra de progresso
+            updateProgressBar();
+
+            // Validação final do formulário
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    if (currentStep !== totalSteps) {
+                        e.preventDefault();
+                        alert('Por favor, complete todas as etapas do formulário.');
+                        return false;
+                    }
+
+                    if (!validateStep1()) {
+                        e.preventDefault();
+                        alert('Por favor, verifique se as senhas coincidem.');
+                        return false;
+                    }
+
+                    // Efeito de carregamento
+                    const submitBtn = this.querySelector('.btn-submit');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
+                    submitBtn.disabled = true;
+
+                    return true;
+                });
+            }
+
+            // Funções de formatação
+            function formatarCPF(input) {
+                if (!input) return;
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 11) value = value.substring(0, 11);
+
+                    if (value.length > 9) {
+                        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+                    } else if (value.length > 6) {
+                        value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+                    } else if (value.length > 3) {
+                        value = value.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+                    }
+
+                    e.target.value = value;
+                });
+            }
+
+            function formatarTelefone(input) {
+                if (!input) return;
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 11) value = value.substring(0, 11);
+
+                    if (value.length > 10) {
+                        value = value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+                    } else if (value.length > 6) {
+                        value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+                    } else if (value.length > 2) {
+                        value = value.replace(/(\d{2})(\d{0,5})/, "($1) $2");
+                    }
+
+                    e.target.value = value;
+                });
+            }
+
+            function formatarCEP(input) {
+                if (!input) return;
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 8) value = value.substring(0, 8);
+
+                    if (value.length > 5) {
+                        value = value.replace(/(\d{5})(\d{1,3})/, "$1-$2");
+                    }
+
+                    e.target.value = value;
+                });
+            }
+
+            function formatarDinheiro(input) {
+                if (!input) return;
+                input.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        value = (parseInt(value) / 100).toFixed(2);
+                        value = value.replace('.', ',');
+                        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        e.target.value = value ? 'R$ ' + value : '';
+                    }
+                });
+            }
+
+            // Efeito hover no ícone
+            const registerIcon = document.querySelector('.register-icon');
+            if (registerIcon) {
+                registerIcon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+
+                registerIcon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

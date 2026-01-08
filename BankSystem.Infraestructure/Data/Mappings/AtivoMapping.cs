@@ -10,7 +10,7 @@ public class AtivoMapping : IEntityTypeConfiguration<Ativo>
     {
         builder.HasKey(a => a.Id);
 
-        builder.Property(a => a.Codigo)
+        builder.Property(a => a.Simbolo)
             .HasMaxLength(50)
             .IsRequired();
 

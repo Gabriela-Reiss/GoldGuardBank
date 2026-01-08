@@ -1,0 +1,510 @@
+﻿@model BankSystem.Application.DTOs.TransferenciaDto
+
+@{
+    ViewData["Title"] = "Transferência | Gold Guard";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --blue: #007bff;
+            --blue-dark: #0056b3;
+            --black: #212121;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #E0E0E0;
+            --gray-dark: #757575;
+            --red: #D32F2F;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--gray-light) 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .centralized-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .transferencia-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 0.5s ease-out;
+            position: relative;
+        }
+
+        /* Header com botão de voltar */
+        .transferencia-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .voltar-header {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .btn-voltar-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+            .btn-voltar-header:hover {
+                background: var(--gray);
+                color: var(--blue);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                border-color: var(--gold);
+            }
+
+            .btn-voltar-header i {
+                font-size: 20px;
+            }
+
+        .transferencia-icon-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+
+        .transferencia-icon {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .transferencia-title {
+            color: var(--black);
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .transferencia-subtitle {
+            color: var(--gray-dark);
+            font-size: 15px;
+            margin-bottom: 30px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Formulário */
+        .transferencia-form {
+            width: 100%;
+        }
+
+        /* Campos do formulário */
+        .form-group-transferencia {
+            margin-bottom: 25px;
+        }
+
+        .form-label-transferencia {
+            color: var(--black);
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+            z-index: 2;
+        }
+
+        .form-input-transferencia {
+            width: 100%;
+            padding: 18px 15px 18px 50px;
+            border: 2px solid var(--gray);
+            border-radius: 15px;
+            font-size: 16px;
+            background: var(--white);
+            color: var(--black);
+            transition: all 0.3s;
+        }
+
+            .form-input-transferencia:focus {
+                outline: none;
+                border-color: var(--blue);
+                box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            }
+
+            .form-input-transferencia:hover {
+                border-color: var(--gold);
+            }
+
+            .form-input-transferencia::placeholder {
+                color: var(--gray-dark);
+                opacity: 0.7;
+            }
+
+        /* Input de valor com prefixo */
+        .valor-input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .valor-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--black);
+            font-weight: 600;
+            font-size: 18px;
+            z-index: 2;
+        }
+
+        .valor-input {
+            width: 100%;
+            padding: 18px 15px 18px 45px;
+            border: 2px solid var(--gray);
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: 600;
+            background: var(--white);
+            color: var(--black);
+            transition: all 0.3s;
+            text-align: right;
+            letter-spacing: 1px;
+        }
+
+            .valor-input:focus {
+                outline: none;
+                border-color: var(--blue);
+                box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            }
+
+            .valor-input:hover {
+                border-color: var(--gold);
+            }
+
+        /* Botão de transferência */
+        .btn-transferencia {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            border: none;
+            border-radius: 15px;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+            .btn-transferencia:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
+            }
+
+            .btn-transferencia:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+        /* Informações da transferência */
+        .info-transferencia {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .info-title {
+            color: var(--black);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+            .info-title i {
+                color: var(--gold-dark);
+            }
+
+        .info-text {
+            color: var(--gray-dark);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Validação */
+        .validation-error {
+            color: var(--red);
+            font-size: 13px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-error {
+            border-color: var(--red) !important;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1) !important;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="centralized-container">
+        <div class="transferencia-card">
+            <!-- Cabeçalho com ícone de voltar -->
+            <div class="transferencia-header">
+                <div class="voltar-header">
+                    <a asp-controller="Home" asp-action="Index" class="btn-voltar-header" title="Voltar para Dashboard">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+
+                <div class="transferencia-icon-container">
+                    <div class="transferencia-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                </div>
+
+                <h1 class="transferencia-title">Transferência</h1>
+                <p class="transferencia-subtitle">Envie dinheiro para outra conta com segurança</p>
+            </div>
+
+            <form asp-controller="Transacao" asp-action="Transferencia" method="post" id="transferenciaForm">
+                @Html.AntiForgeryToken()
+
+                <!-- Conta destino -->
+                <div class="form-group-transferencia">
+                    <label class="form-label-transferencia">Número da conta destino</label>
+                    <div class="input-container">
+                        <div class="input-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <input asp-for="NumeroContaDestino"
+                               class="form-input-transferencia"
+                               id="numeroContaInput"
+                               placeholder="Digite o número da conta"
+                               required />
+                    </div>
+                    <span asp-validation-for="NumeroContaDestino" class="validation-error"></span>
+                    <div id="contaError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Informe um número de conta válido
+                    </div>
+                </div>
+
+                <!-- Valor -->
+                <div class="form-group-transferencia">
+                    <label class="form-label-transferencia">Valor da transferência</label>
+                    <div class="valor-input-group">
+                        <span class="valor-prefix">R$</span>
+                        <input asp-for="Valor"
+                               class="valor-input"
+                               id="valorInput"
+                               placeholder="0,00"
+                               step="0.01"
+                               min="0.01"
+                               required />
+                    </div>
+                    <span asp-validation-for="Valor" class="validation-error"></span>
+                    <div id="valorError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Valor mínimo: R$ 0,01
+                    </div>
+                </div>
+
+                <!-- Botão de transferência -->
+                <button type="submit" class="btn-transferencia" id="btnTransferencia">
+                    <i class="fas fa-paper-plane"></i> Confirmar Transferência
+                </button>
+
+                <!-- Informações -->
+                <div class="info-transferencia">
+                    <div class="info-title">
+                        <i class="fas fa-info-circle"></i> Importante
+                    </div>
+                    <p class="info-text">
+                        A transferência será processada instantaneamente.
+                        Verifique os dados antes de confirmar.
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const valorInput = document.getElementById('valorInput');
+            const numeroContaInput = document.getElementById('numeroContaInput');
+            const valorError = document.getElementById('valorError');
+            const contaError = document.getElementById('contaError');
+            const btnTransferencia = document.getElementById('btnTransferencia');
+
+            // Formatação do input de valor
+            if (valorInput) {
+                valorInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+
+                    if (value.length > 0) {
+                        value = (parseInt(value) / 100).toFixed(2);
+                        value = value.replace('.', ',');
+                        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    }
+
+                    e.target.value = value;
+                    validateInputs();
+                });
+
+                valorInput.addEventListener('focus', function() {
+                    this.style.borderColor = 'var(--blue)';
+                });
+
+                valorInput.addEventListener('blur', function() {
+                    this.style.borderColor = '';
+                });
+            }
+
+            // Validação do número da conta
+            if (numeroContaInput) {
+                numeroContaInput.addEventListener('input', function() {
+                    validateInputs();
+                });
+
+                numeroContaInput.addEventListener('focus', function() {
+                    this.style.borderColor = 'var(--blue)';
+                });
+
+                numeroContaInput.addEventListener('blur', function() {
+                    this.style.borderColor = '';
+                });
+            }
+
+            // Validação dos inputs
+            function validateInputs() {
+                let isValid = true;
+
+                // Validar valor
+                const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
+
+                if (isNaN(valor) || valor < 0.01) {
+                    valorInput.classList.add('input-error');
+                    valorError.style.display = 'flex';
+                    isValid = false;
+                } else {
+                    valorInput.classList.remove('input-error');
+                    valorError.style.display = 'none';
+                }
+
+                // Validar número da conta
+                const conta = numeroContaInput.value.trim();
+
+                if (conta.length < 3 || !/^\d+$/.test(conta)) {
+                    numeroContaInput.classList.add('input-error');
+                    contaError.style.display = 'flex';
+                    isValid = false;
+                } else {
+                    numeroContaInput.classList.remove('input-error');
+                    contaError.style.display = 'none';
+                }
+
+                // Habilitar/desabilitar botão
+                btnTransferencia.disabled = !isValid;
+                return isValid;
+            }
+
+            // Validação do formulário
+            const transferenciaForm = document.getElementById('transferenciaForm');
+            transferenciaForm.addEventListener('submit', function(e) {
+                if (!validateInputs()) {
+                    e.preventDefault();
+                    alert('Por favor, corrija os erros no formulário antes de continuar.');
+                    return false;
+                }
+
+                const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
+                const conta = numeroContaInput.value.trim();
+
+                // Confirmação para valores altos
+                if (valor > 500) {
+                    if (!confirm(`Tem certeza que deseja transferir R$ ${valor.toFixed(2).replace('.', ',')} para a conta ${conta}?\n\nEsta é uma quantia considerável.`)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+
+                // Efeito de carregamento
+                btnTransferencia.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+                btnTransferencia.disabled = true;
+
+                return true;
+            });
+
+            // Inicializar validação
+            validateInputs();
+        });
+    </script>
+</body>
+</html>

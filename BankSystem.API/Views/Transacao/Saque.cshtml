@@ -1,0 +1,487 @@
+﻿@model BankSystem.Application.DTOs.ValorDto
+
+@{
+    ViewData["Title"] = "Saque | Gold Guard";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --red: #D32F2F;
+            --red-dark: #B71C1C;
+            --black: #212121;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #E0E0E0;
+            --gray-dark: #757575;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--gray-light) 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .centralized-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .saque-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 0.5s ease-out;
+            position: relative;
+        }
+
+        /* Header com botão de voltar */
+        .saque-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .voltar-header {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .btn-voltar-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+            .btn-voltar-header:hover {
+                background: var(--gray);
+                color: var(--red);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                border-color: var(--gold);
+            }
+
+            .btn-voltar-header i {
+                font-size: 20px;
+            }
+
+        .saque-icon-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+
+        .saque-icon {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 32px;
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        .saque-title {
+            color: var(--black);
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .saque-subtitle {
+            color: var(--gray-dark);
+            font-size: 15px;
+            margin-bottom: 30px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Valor Input */
+        .valor-container {
+            margin-bottom: 30px;
+        }
+
+        .valor-label {
+            color: var(--black);
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 16px;
+        }
+
+        .valor-input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .valor-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--black);
+            font-weight: 600;
+            font-size: 18px;
+            z-index: 2;
+        }
+
+        .valor-input {
+            width: 100%;
+            padding: 18px 15px 18px 45px;
+            border: 2px solid var(--gray);
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: 600;
+            background: var(--white);
+            color: var(--black);
+            transition: all 0.3s;
+            text-align: right;
+            letter-spacing: 1px;
+        }
+
+            .valor-input:focus {
+                outline: none;
+                border-color: var(--red);
+                box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+            }
+
+            .valor-input:hover {
+                border-color: var(--gold);
+            }
+
+        /* Botões de valor rápido */
+        .valores-rapidos {
+            margin-bottom: 30px;
+        }
+
+        .valores-rapidos-title {
+            color: var(--gray-dark);
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .btn-valor {
+            padding: 12px;
+            border: 2px solid var(--gray);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--black);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+            .btn-valor:hover {
+                border-color: var(--gold);
+                background: rgba(255, 215, 0, 0.05);
+                transform: translateY(-2px);
+            }
+
+            .btn-valor.active {
+                border-color: var(--red);
+                background: var(--red);
+                color: var(--white);
+            }
+
+        /* Botão de Saque */
+        .btn-saque {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+            border: none;
+            border-radius: 15px;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+            .btn-saque:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4);
+            }
+
+            .btn-saque:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+        /* Informações */
+        .info-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .info-title {
+            color: var(--black);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+            .info-title i {
+                color: var(--gold-dark);
+            }
+
+        .info-text {
+            color: var(--gray-dark);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .info-detalhes {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: var(--gray-dark);
+        }
+
+        .info-valor {
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        
+
+        .validation-error {
+            color: var(--red);
+            font-size: 13px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-error {
+            border-color: var(--red) !important;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1) !important;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="centralized-container">
+        <div class="saque-card">
+            <!-- Cabeçalho com ícone de voltar -->
+            <div class="saque-header">
+                <div class="voltar-header">
+                    <a asp-controller="Home" asp-action="Index" class="btn-voltar-header" title="Voltar para Dashboard">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+
+                <div class="saque-icon-container">
+                    <div class="saque-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+
+                <h1 class="saque-title">Saque</h1>
+                <p class="saque-subtitle">Informe o valor que deseja sacar da sua conta</p>
+            </div>
+
+            <form asp-controller="Transacao" asp-action="Saque" method="post" id="saqueForm">
+                @Html.AntiForgeryToken()
+
+                <div class="valor-container">
+                    <label class="valor-label">Valor do Saque</label>
+                    <div class="valor-input-group">
+                        <span class="valor-prefix">R$</span>
+                        <input asp-for="Valor"
+                               class="valor-input"
+                               id="valorInput"
+                               placeholder="0,00"
+                               step="0.01"
+                               min="0.01"
+                               required />
+                    </div>
+                    <span asp-validation-for="Valor" class="validation-error"></span>
+                    <div id="valorError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Valor mínimo: R$ 0,01
+                    </div>
+                </div>
+
+                <!-- Valores Rápidos -->
+                <div class="valores-rapidos">
+                    <div class="valores-rapidos-title">Valores sugeridos:</div>
+                    <div class="valores-grid">
+                        <button type="button" class="btn-valor" data-valor="10">R$ 10</button>
+                        <button type="button" class="btn-valor" data-valor="20">R$ 20</button>
+                        <button type="button" class="btn-valor" data-valor="50">R$ 50</button>
+                        <button type="button" class="btn-valor" data-valor="100">R$ 100</button>
+                        <button type="button" class="btn-valor" data-valor="200">R$ 200</button>
+                        <button type="button" class="btn-valor" data-valor="500">R$ 500</button>
+                    </div>
+                </div>
+
+                <!-- Botão de Saque -->
+                <button type="submit" class="btn-saque" id="btnSaque">
+                    <i class="fas fa-arrow-up"></i> Confirmar Saque
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const valorInput = document.getElementById('valorInput');
+            const valorError = document.getElementById('valorError');
+            const btnSaque = document.getElementById('btnSaque');
+            const btnValores = document.querySelectorAll('.btn-valor');
+
+            // Formatação do input de valor
+            valorInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+
+                if (value.length > 0) {
+                    value = (parseInt(value) / 100).toFixed(2);
+                    value = value.replace('.', ',');
+                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                }
+
+                e.target.value = value;
+                validateInput();
+            });
+
+            // Botões de valor rápido
+            btnValores.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const valor = parseFloat(this.getAttribute('data-valor'));
+
+                    btnValores.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    valorInput.value = valor.toFixed(2).replace('.', ',');
+                    validateInput();
+                });
+            });
+
+            // Validação do input
+            function validateInput() {
+                const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
+
+                if (isNaN(valor) || valor < 0.01) {
+                    valorInput.classList.add('input-error');
+                    valorError.style.display = 'flex';
+                    btnSaque.disabled = true;
+                    return false;
+                } else {
+                    valorInput.classList.remove('input-error');
+                    valorError.style.display = 'none';
+                    btnSaque.disabled = false;
+                    return true;
+                }
+            }
+
+            // Validação do formulário
+            const saqueForm = document.getElementById('saqueForm');
+            saqueForm.addEventListener('submit', function(e) {
+                if (!validateInput()) {
+                    e.preventDefault();
+                    alert('Por favor, informe um valor válido para o saque.');
+                    return false;
+                }
+
+                const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
+
+                if (valor > 1000) {
+                    if (!confirm(`Tem certeza que deseja sacar R$ ${valor.toFixed(2).replace('.', ',')}?\n\nEsta é uma quantia considerável.`)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+
+                btnSaque.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+                btnSaque.disabled = true;
+                return true;
+            });
+
+            // Efeitos visuais
+            validateInput();
+
+            valorInput.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--red)';
+            });
+
+            valorInput.addEventListener('blur', function() {
+                this.style.borderColor = '';
+            });
+
+            // Remover seleção dos botões ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('btn-valor')) {
+                    btnValores.forEach(btn => btn.classList.remove('active'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

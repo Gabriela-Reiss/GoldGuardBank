@@ -1,32 +1,29 @@
-using System.Diagnostics;
-using BankSystem.API.Models;
+using System.Security.Claims;
+using BankSystem.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankSystem.API.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IContaService _contaService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IContaService contaService)
         {
-            _logger = logger;
+            _contaService = contaService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            var usuarioId = int.Parse(
+                User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+            );
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            var model = await _contaService.ObterResumoAsync(usuarioId);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(model);
         }
     }
 }

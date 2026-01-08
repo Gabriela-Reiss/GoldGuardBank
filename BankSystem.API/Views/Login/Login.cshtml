@@ -1,0 +1,637 @@
+﻿@model BankSystem.Application.DTOs.LoginDto
+
+@{
+    ViewData["Title"] = "Login | Gold Guard";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --red: #D32F2F;
+            --red-dark: #B71C1C;
+            --black: #212121;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #E0E0E0;
+            --gray-dark: #757575;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--gray-light) 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .centralized-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            padding: 50px;
+            width: 100%;
+            max-width: 480px;
+            animation: fadeInUp 0.6s ease-out;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+        }
+
+            /* Efeito de brilho nas bordas */
+            .login-card::before {
+                content: '';
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.05), rgba(255, 215, 0, 0.1));
+                border-radius: 22px;
+                z-index: -1;
+                animation: borderGlow 3s ease-in-out infinite alternate;
+            }
+
+        /* Header do Login */
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-icon-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+        }
+
+        .login-icon {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-size: 36px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .login-title {
+            color: var(--black);
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+            .login-title span {
+                color: var(--gold-dark);
+            }
+
+        .login-subtitle {
+            color: var(--gray-dark);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* Formulário */
+        .login-form {
+            width: 100%;
+        }
+
+        .form-group-login {
+            margin-bottom: 28px;
+        }
+
+        .form-label-login {
+            color: var(--black);
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 15px;
+        }
+
+        .input-container-login {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-icon-login {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+        .form-input-login {
+            width: 100%;
+            padding: 16px 18px 16px 52px;
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            font-size: 16px;
+            background: var(--white);
+            color: var(--black);
+            transition: all 0.3s;
+            font-weight: 400;
+        }
+
+            .form-input-login:focus {
+                outline: none;
+                border-color: var(--gold);
+                box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15);
+            }
+
+            .form-input-login:hover {
+                border-color: var(--gold-dark);
+            }
+
+            .form-input-login::placeholder {
+                color: var(--gray-dark);
+                opacity: 0.7;
+            }
+
+        .password-toggle {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-dark);
+            cursor: pointer;
+            padding: 5px;
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+            .password-toggle:hover {
+                color: var(--gold-dark);
+            }
+
+        /* Checkbox e link */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            font-size: 14px;
+        }
+
+        .remember-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--black);
+            cursor: pointer;
+        }
+
+        .checkbox-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--gray);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+            .checkbox-custom:checked {
+                background-color: var(--gold);
+                border-color: var(--gold);
+            }
+
+                .checkbox-custom:checked::after {
+                    content: '✓';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: var(--black);
+                    font-weight: bold;
+                    font-size: 12px;
+                }
+
+        .forgot-link {
+            color: var(--gray-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+            .forgot-link:hover {
+                color: var(--gold-dark);
+                text-decoration: none;
+            }
+
+        /* Botão de Login */
+        .btn-login-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--black);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-login-submit:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+            }
+
+            .btn-login-submit:active {
+                transform: translateY(-1px);
+            }
+
+            .btn-login-submit::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transition: left 0.5s;
+            }
+
+            .btn-login-submit:hover::before {
+                left: 100%;
+            }
+
+        /* Link de Cadastro */
+        .register-section {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .register-text {
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .btn-register {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 30px;
+            background: var(--white);
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            color: var(--black);
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+            .btn-register:hover {
+                background: var(--gray-light);
+                border-color: var(--gold);
+                color: var(--black);
+                text-decoration: none;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Validação */
+        .validation-error {
+            color: var(--red);
+            font-size: 13px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-error {
+            border-color: var(--red) !important;
+            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1) !important;
+        }
+
+        
+
+        /* Efeitos de foco */
+        .input-focused .input-icon-login {
+            color: var(--gold-dark);
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="centralized-container">
+        <div class="login-card">
+            <!-- Header do Login -->
+            <div class="login-header">
+                <div class="login-icon-container">
+                    <div class="login-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+
+                <h1 class="login-title">Gold <span>Guard</span></h1>
+                <p class="login-subtitle">Segurança bancária de outro nível</p>
+            </div>
+
+            <form asp-controller="Login" asp-action="Login" method="post" id="loginForm" class="login-form">
+                @Html.AntiForgeryToken()
+
+                <!-- Campo CPF -->
+                <div class="form-group-login">
+                    <label class="form-label-login">CPF</label>
+                    <div class="input-container-login" id="cpfContainer">
+                        <div class="input-icon-login">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <input asp-for="CPF"
+                               class="form-input-login"
+                               id="cpfInput"
+                               placeholder="000.000.000-00"
+                               required />
+                    </div>
+                    <span asp-validation-for="CPF" class="validation-error"></span>
+                    <div id="cpfError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> CPF inválido
+                    </div>
+                </div>
+
+                <!-- Campo Senha -->
+                <div class="form-group-login">
+                    <label class="form-label-login">Senha</label>
+                    <div class="input-container-login" id="passwordContainer">
+                        <div class="input-icon-login">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <input asp-for="Senha"
+                               type="password"
+                               class="form-input-login"
+                               id="passwordInput"
+                               placeholder="Digite sua senha"
+                               required />
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Senha" class="validation-error"></span>
+                    <div id="passwordError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i> Senha deve ter pelo menos 6 caracteres
+                    </div>
+                </div>
+
+                <!-- Opções -->
+                <div class="login-options">
+                    <label class="remember-container">
+                        <input type="checkbox" class="checkbox-custom" id="rememberMe">
+                        <span>Lembrar-me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Esqueceu a senha?</a>
+                </div>
+
+                <!-- Botão de Login -->
+                <button type="submit" class="btn-login-submit" id="btnLogin">
+                    <i class="fas fa-sign-in-alt"></i> Acessar Conta
+                </button>
+            </form>
+
+            <!-- Link para Cadastro -->
+            <div class="register-section">
+                <p class="register-text">Ainda não tem uma conta?</p>
+                <a asp-controller="Usuario" asp-action="Register" class="btn-register">
+                    <i class="fas fa-user-plus"></i> Criar Conta Gold Guard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cpfInput = document.getElementById('cpfInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const togglePassword = document.getElementById('togglePassword');
+            const btnLogin = document.getElementById('btnLogin');
+            const cpfError = document.getElementById('cpfError');
+            const passwordError = document.getElementById('passwordError');
+            const cpfContainer = document.getElementById('cpfContainer');
+            const passwordContainer = document.getElementById('passwordContainer');
+
+            // Mostrar/ocultar senha
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordInput.type === 'password' ? 'text' : 'password';
+                    passwordInput.type = type;
+                    this.innerHTML = type === 'password'
+                        ? '<i class="fas fa-eye"></i>'
+                        : '<i class="fas fa-eye-slash"></i>';
+                });
+            }
+
+            // Formatar CPF automaticamente
+            if (cpfInput) {
+                cpfInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+
+                    if (value.length > 11) {
+                        value = value.substring(0, 11);
+                    }
+
+                    // Formatar: XXX.XXX.XXX-XX
+                    if (value.length > 9) {
+                        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+                    } else if (value.length > 6) {
+                        value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+                    } else if (value.length > 3) {
+                        value = value.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+                    }
+
+                    e.target.value = value;
+                    validateCPF(value);
+                });
+
+                cpfInput.addEventListener('focus', function() {
+                    cpfContainer.classList.add('input-focused');
+                });
+
+                cpfInput.addEventListener('blur', function() {
+                    cpfContainer.classList.remove('input-focused');
+                });
+            }
+
+            // Efeitos no campo de senha
+            if (passwordInput) {
+                passwordInput.addEventListener('focus', function() {
+                    passwordContainer.classList.add('input-focused');
+                });
+
+                passwordInput.addEventListener('blur', function() {
+                    passwordContainer.classList.remove('input-focused');
+                    validatePassword(this.value);
+                });
+
+                passwordInput.addEventListener('input', function() {
+                    validatePassword(this.value);
+                });
+            }
+
+            // Validação do CPF
+            function validateCPF(cpf) {
+                const cleanCPF = cpf.replace(/\D/g, '');
+
+                if (cleanCPF.length === 11) {
+                    // Algoritmo de validação de CPF básico
+                    let soma = 0;
+                    let resto;
+
+                    // Verifica se todos os dígitos são iguais
+                    if (cleanCPF === "00000000000" ||
+                        cleanCPF === "11111111111" ||
+                        cleanCPF === "22222222222" ||
+                        cleanCPF === "33333333333" ||
+                        cleanCPF === "44444444444" ||
+                        cleanCPF === "55555555555" ||
+                        cleanCPF === "66666666666" ||
+                        cleanCPF === "77777777777" ||
+                        cleanCPF === "88888888888" ||
+                        cleanCPF === "99999999999") {
+                        cpfError.style.display = 'flex';
+                        cpfInput.classList.add('input-error');
+                        return false;
+                    }
+
+                    // Primeiro dígito verificador
+                    for (let i = 0; i < 9; i++) {
+                        soma += parseInt(cleanCPF.charAt(i)) * (10 - i);
+                    }
+
+                    resto = 11 - (soma % 11);
+                    if (resto === 10 || resto === 11) resto = 0;
+
+                    if (resto !== parseInt(cleanCPF.charAt(9))) {
+                        cpfError.style.display = 'flex';
+                        cpfInput.classList.add('input-error');
+                        return false;
+                    }
+
+                    // Segundo dígito verificador
+                    soma = 0;
+                    for (let i = 0; i < 10; i++) {
+                        soma += parseInt(cleanCPF.charAt(i)) * (11 - i);
+                    }
+
+                    resto = 11 - (soma % 11);
+                    if (resto === 10 || resto === 11) resto = 0;
+
+                    if (resto !== parseInt(cleanCPF.charAt(10))) {
+                        cpfError.style.display = 'flex';
+                        cpfInput.classList.add('input-error');
+                        return false;
+                    }
+
+                    cpfError.style.display = 'none';
+                    cpfInput.classList.remove('input-error');
+                    return true;
+                } else if (cleanCPF.length > 0) {
+                    cpfError.style.display = 'flex';
+                    cpfInput.classList.add('input-error');
+                    return false;
+                } else {
+                    cpfError.style.display = 'none';
+                    cpfInput.classList.remove('input-error');
+                    return false;
+                }
+            }
+
+            // Validação da senha
+            function validatePassword(password) {
+                if (password.length > 0 && password.length < 6) {
+                    passwordError.style.display = 'flex';
+                    passwordInput.classList.add('input-error');
+                    return false;
+                } else {
+                    passwordError.style.display = 'none';
+                    passwordInput.classList.remove('input-error');
+                    return true;
+                }
+            }
+
+            // Validação do formulário
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    const cpf = cpfInput.value.replace(/\D/g, '');
+                    const password = passwordInput.value;
+
+                    if (!validateCPF(cpfInput.value)) {
+                        e.preventDefault();
+                        alert('Por favor, digite um CPF válido.');
+                        return false;
+                    }
+
+                    if (password.length < 6) {
+                        e.preventDefault();
+                        alert('A senha deve ter pelo menos 6 caracteres.');
+                        return false;
+                    }
+
+                    // Efeito de carregamento
+                    btnLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+                    btnLogin.disabled = true;
+
+                    return true;
+                });
+            }
+
+            // Efeito hover no ícone do card
+            const loginIcon = document.querySelector('.login-icon');
+            if (loginIcon) {
+                loginIcon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+
+                loginIcon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

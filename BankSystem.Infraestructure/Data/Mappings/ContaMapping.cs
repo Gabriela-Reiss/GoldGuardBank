@@ -11,7 +11,7 @@ public class ContaMapping : IEntityTypeConfiguration<Conta>
         builder.HasKey(c => c.Id);
 
         builder.HasOne(c => c.Usuario)
-               .WithMany()
+               .WithMany(u => u.Contas)
                .HasForeignKey(c => c.UsuarioId)
                .OnDelete(DeleteBehavior.Restrict);
 
@@ -19,8 +19,19 @@ public class ContaMapping : IEntityTypeConfiguration<Conta>
                .HasConversion<string>()
                .IsRequired();
 
-        builder.Property(c => c.DataCriacao)
+        builder.Property(c => c.SaldoTotal)
+               .HasPrecision(18, 2)
                .IsRequired();
 
+        builder.Property(c => c.NumeroConta)
+               .HasMaxLength(20)
+               .IsRequired();
+
+        builder.HasIndex(c => c.NumeroConta)
+               .IsUnique(); 
+
+        builder.Property(c => c.DataCriacao)
+               .IsRequired();
     }
 }
+

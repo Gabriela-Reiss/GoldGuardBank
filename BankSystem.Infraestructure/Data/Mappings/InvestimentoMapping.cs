@@ -11,14 +11,12 @@ public class InvestimentoMapping : IEntityTypeConfiguration<Investimento>
         builder.HasKey(i => i.Id);
 
         builder.HasOne(i => i.Conta)
-               .WithMany()
-               .HasForeignKey(c => c.ContaId)
-               .OnDelete(DeleteBehavior.Restrict);
+       .WithMany(c => c.Investimentos)
+       .HasForeignKey(i => i.ContaId);
 
         builder.HasOne(i => i.Ativo)
                .WithMany()
-               .HasForeignKey(i => i.AtivoId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .HasForeignKey(i => i.AtivoId);
 
         builder.Property(i => i.Quantidade)
                .HasPrecision(18, 4)

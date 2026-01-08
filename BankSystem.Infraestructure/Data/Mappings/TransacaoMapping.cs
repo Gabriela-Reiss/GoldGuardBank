@@ -12,9 +12,9 @@ public class TransacaoMapping : IEntityTypeConfiguration<Transacao>
         builder.HasKey(t => t.Id);
 
         builder.HasOne(t => t.Conta)
-               .WithMany()
-               .HasForeignKey(c => c.ContaId)
-               .OnDelete(DeleteBehavior.Restrict);
+       .WithMany(c => c.Transacoes)
+       .HasForeignKey(t => t.ContaId);
+
 
         builder.Property(t => t.Tipo)
                .HasConversion<string>()

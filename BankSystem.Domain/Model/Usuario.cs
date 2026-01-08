@@ -34,6 +34,17 @@ public class Usuario
     [Required(ErrorMessage = "O endereço é obrigatório")]
     public Endereco? Endereco { get; set; }
 
+    public Login Login { get; set; }
+
+
+    public Usuario() { }
+
+    public Usuario(string nome, string cpf)
+    {
+        Nome = nome;
+        CPF = cpf;
+    }
+
     public ICollection<Conta>? Contas { get; set; }
 
 }
