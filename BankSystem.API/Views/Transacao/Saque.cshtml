@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -58,7 +58,7 @@
             position: relative;
         }
 
-        /* Header com botão de voltar */
+     
         .saque-header {
             text-align: center;
             margin-bottom: 30px;
@@ -134,7 +134,7 @@
             margin-right: auto;
         }
 
-        /* Valor Input */
+       
         .valor-container {
             margin-bottom: 30px;
         }
@@ -187,7 +187,7 @@
                 border-color: var(--gold);
             }
 
-        /* Botões de valor rápido */
+        
         .valores-rapidos {
             margin-bottom: 30px;
         }
@@ -229,7 +229,7 @@
                 color: var(--white);
             }
 
-        /* Botão de Saque */
+      
         .btn-saque {
             width: 100%;
             padding: 18px;
@@ -260,7 +260,7 @@
                 box-shadow: none;
             }
 
-        /* Informações */
+      
         .info-box {
             background: rgba(255, 215, 0, 0.05);
             border: 2px solid var(--gold);
@@ -329,7 +329,7 @@
 <body>
     <div class="centralized-container">
         <div class="saque-card">
-            <!-- Cabeçalho com ícone de voltar -->
+           
             <div class="saque-header">
                 <div class="voltar-header">
                     <a asp-controller="Home" asp-action="Index" class="btn-voltar-header" title="Voltar para Dashboard">
@@ -368,7 +368,7 @@
                     </div>
                 </div>
 
-                <!-- Valores Rápidos -->
+              
                 <div class="valores-rapidos">
                     <div class="valores-rapidos-title">Valores sugeridos:</div>
                     <div class="valores-grid">
@@ -381,7 +381,7 @@
                     </div>
                 </div>
 
-                <!-- Botão de Saque -->
+              
                 <button type="submit" class="btn-saque" id="btnSaque">
                     <i class="fas fa-arrow-up"></i> Confirmar Saque
                 </button>
@@ -397,7 +397,7 @@
             const btnSaque = document.getElementById('btnSaque');
             const btnValores = document.querySelectorAll('.btn-valor');
 
-            // Formatação do input de valor
+         
             valorInput.addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, '');
 
@@ -411,7 +411,7 @@
                 validateInput();
             });
 
-            // Botões de valor rápido
+         
             btnValores.forEach(btn => {
                 btn.addEventListener('click', function() {
                     const valor = parseFloat(this.getAttribute('data-valor'));
@@ -424,7 +424,7 @@
                 });
             });
 
-            // Validação do input
+         
             function validateInput() {
                 const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
 
@@ -441,7 +441,7 @@
                 }
             }
 
-            // Validação do formulário
+            
             const saqueForm = document.getElementById('saqueForm');
             saqueForm.addEventListener('submit', function(e) {
                 if (!validateInput()) {
@@ -464,7 +464,7 @@
                 return true;
             });
 
-            // Efeitos visuais
+          
             validateInput();
 
             valorInput.addEventListener('focus', function() {
@@ -475,7 +475,7 @@
                 this.style.borderColor = '';
             });
 
-            // Remover seleção dos botões ao clicar fora
+            
             document.addEventListener('click', function(e) {
                 if (!e.target.classList.contains('btn-valor')) {
                     btnValores.forEach(btn => btn.classList.remove('active'));

@@ -38,7 +38,13 @@ public class UnityOfWork : IUnityOfWork
         }
     }
 
-    public IAtivoRepository Ativos => throw new NotImplementedException();
+    public IAtivoRepository Ativos
+    {
+        get
+        {
+            return _ativos ??= new AtivoRepository(_context);
+        }
+    }
 
     public ITransacaoRepository Transacoes
     {

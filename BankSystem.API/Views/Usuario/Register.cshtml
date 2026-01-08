@@ -11,7 +11,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -53,13 +52,13 @@
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
             padding: 50px;
             width: 100%;
-            max-width: 600px; /* Aumentado de 500px para 600px */
+            max-width: 600px;
             animation: fadeInUp 0.6s ease-out;
             border: 1px solid rgba(255, 215, 0, 0.1);
             position: relative;
         }
 
-        /* Efeito de brilho nas bordas */
+       
         .register-card::before {
             content: '';
             position: absolute;
@@ -76,7 +75,7 @@
             animation: borderGlow 3s ease-in-out infinite alternate;
         }
 
-        /* Header do Cadastro */
+      
         .register-header {
             text-align: center;
             margin-bottom: 40px;
@@ -121,7 +120,7 @@
             font-weight: 400;
         }
 
-        /* Barra de Progresso */
+    
         .form-progress {
             display: flex;
             justify-content: space-between;
@@ -187,7 +186,7 @@
                 font-weight: 600;
             }
 
-        /* Formulário */
+  
         .register-form {
             width: 100%;
         }
@@ -211,7 +210,7 @@
             border-bottom: 2px solid var(--gray-light);
         }
 
-        /* Campos do Formulário - AUMENTADOS */
+       
         .form-group-register {
             margin-bottom: 24px;
         }
@@ -247,15 +246,15 @@
         .form-input-register,
         .form-select-register {
             width: 100%;
-            padding: 18px 25px 25px 55px; /* Aumentado padding */
+            padding: 18px 25px 25px 55px; 
             border: 2px solid var(--gray);
             border-radius: 12px;
-            font-size: 16px; /* Aumentado de 14px */
+            font-size: 16px; 
             background: var(--white);
             color: var(--black);
             transition: all 0.3s;
             font-weight: 400;
-            min-height: 56px; /* Altura mínima aumentada */
+            min-height: 56px; 
             box-sizing: border-box;
         }
 
@@ -295,24 +294,24 @@
             border: none;
             color: var(--gray-dark);
             cursor: pointer;
-            padding: 8px; /* Aumentado padding */
+            padding: 8px; 
             z-index: 2;
             transition: color 0.3s;
-            font-size: 18px; /* Ícone maior */
+            font-size: 18px; 
         }
 
             .password-toggle:hover {
                 color: var(--gold-dark);
             }
 
-        /* Layout de colunas para alguns campos */
+        
         .row-inputs {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px; /* Aumentado gap */
+            gap: 20px; 
         }
 
-        /* Botões de Navegação */
+       
         .form-actions {
             display: flex;
             justify-content: space-between;
@@ -324,17 +323,17 @@
         .btn-next,
         .btn-back,
         .btn-submit {
-            padding: 18px 35px; /* Aumentado padding */
+            padding: 18px 35px; 
             border: none;
             border-radius: 12px;
             font-weight: 600;
-            font-size: 16px; /* Fonte maior */
+            font-size: 16px; 
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 10px;
-            min-height: 56px; /* Altura mínima */
+            min-height: 56px; 
         }
 
         .btn-next {
@@ -368,7 +367,7 @@
                 box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
             }
 
-        /* Link para Login */
+       
         .login-section {
             text-align: center;
             margin-top: 30px;
@@ -379,23 +378,23 @@
         .login-text {
             color: var(--gray-dark);
             margin-bottom: 15px;
-            font-size: 16px; /* Fonte maior */
+            font-size: 16px;
         }
 
         .btn-login-link {
             display: inline-flex;
             align-items: center;
-            gap: 12px; /* Gap maior */
-            padding: 16px 35px; /* Padding maior */
+            gap: 12px; 
+            padding: 16px 35px; 
             background: var(--white);
             border: 2px solid var(--gray);
             border-radius: 12px;
             color: var(--black);
             font-weight: 600;
-            font-size: 16px; /* Fonte maior */
+            font-size: 16px; 
             text-decoration: none;
             transition: all 0.3s;
-            min-height: 56px; /* Altura mínima */
+            min-height: 56px; 
         }
 
             .btn-login-link:hover {
@@ -407,10 +406,10 @@
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             }
 
-        /* Validação */
+        
         .validation-error {
             color: var(--red);
-            font-size: 14px; /* Fonte maior */
+            font-size: 14px; 
             margin-top: 8px;
             display: flex;
             align-items: center;
@@ -424,7 +423,7 @@
 
         
 
-        /* Efeitos de foco */
+       
         .input-focused .input-icon-register {
             color: var(--gold-dark);
         }
@@ -435,7 +434,7 @@
 <body>
     <div class="centralized-container">
         <div class="register-card">
-            <!-- Header do Cadastro -->
+            
             <div class="register-header">
                 <div class="register-icon-container">
                     <div class="register-icon">
@@ -447,7 +446,7 @@
                 <p class="register-subtitle">Gold Guard - Sua segurança financeira começa aqui</p>
             </div>
 
-            <!-- Barra de Progresso -->
+            
             <div class="form-progress">
                 <div class="progress-line"></div>
                 <div class="progress-step active" id="step1">
@@ -463,11 +462,11 @@
             <form asp-controller="Usuario" asp-action="Register" method="post" id="registerForm" class="register-form">
                 @Html.AntiForgeryToken()
 
-                <!-- Formulário 1: Dados Pessoais -->
+               
                 <div class="form-container active mt-5" id="formStep1">
                     <h3 class="form-title">Informações Pessoais</h3>
 
-                    <!-- Nome Completo -->
+                   
                     <div class="form-group-register">
                         <label class="form-label-register required">Nome Completo</label>
                         <div class="input-container-register" id="nomeContainer">
@@ -483,7 +482,7 @@
                         <span asp-validation-for="Nome" class="validation-error"></span>
                     </div>
 
-                    <!-- CPF e Telefone -->
+                    
                     <div class="row-inputs">
                         <div class="form-group-register">
                             <label class="form-label-register required">CPF</label>
@@ -516,7 +515,7 @@
                         </div>
                     </div>
 
-                    <!-- Email -->
+                    
                     <div class="form-group-register">
                         <label class="form-label-register required">Email</label>
                         <div class="input-container-register" id="emailContainer">
@@ -532,7 +531,7 @@
                         <span asp-validation-for="Email" class="validation-error"></span>
                     </div>
 
-                    <!-- Senha e Confirmação -->
+                    
                     <div class="row-inputs">
                         <div class="form-group-register">
                             <label class="form-label-register required">Senha</label>
@@ -574,20 +573,20 @@
                         </div>
                     </div>
 
-                    <!-- Botão Próximo -->
+                    
                     <div class="form-actions">
-                        <div></div> <!-- Espaço vazio para alinhamento -->
+                        <div></div> 
                         <button type="button" class="btn-next" onclick="nextStep()">
                             Próximo <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Formulário 2: Endereço e Conta -->
+               
                 <div class="form-container" id="formStep2">
                     <h3 class="form-title mt-5">Informações de Endereço e Conta</h3>
 
-                    <!-- Logradouro -->
+                    
                     <div class="form-group-register">
                         <label class="form-label-register required">Logradouro</label>
                         <div class="input-container-register" id="logradouroContainer">
@@ -603,7 +602,7 @@
                         <span asp-validation-for="Endereco.Logradouro" class="validation-error"></span>
                     </div>
 
-                    <!-- Bairro e CEP -->
+                    
                     <div class="row-inputs">
                         <div class="form-group-register">
                             <label class="form-label-register required">Bairro</label>
@@ -636,7 +635,7 @@
                         </div>
                     </div>
 
-                    <!-- Cidade e Estado -->
+                   
                     <div class="row-inputs">
                         <div class="form-group-register">
                             <label class="form-label-register required">Cidade</label>
@@ -670,7 +669,7 @@
                         </div>
                     </div>
 
-                    <!-- Tipo de Conta -->
+                   
                     <div class="form-group-register">
                         <label class="form-label-register required">Tipo de Conta</label>
                         <div class="input-container-register" id="tipoContaContainer">
@@ -690,7 +689,7 @@
 
                     
 
-                    <!-- Botões Voltar e Finalizar -->
+               
                     <div class="form-actions">
                         <button type="button" class="btn-back" onclick="prevStep()">
                             <i class="fas fa-arrow-left"></i> Voltar
@@ -702,7 +701,7 @@
                 </div>
             </form>
 
-            <!-- Link para Login -->
+        
             <div class="login-section">
                 <p class="login-text">Já tem uma conta?</p>
                 <a asp-controller="Login" asp-action="Index" class="btn-login-link">
@@ -712,7 +711,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
     <script>
         let currentStep = 1;
         const totalSteps = 2;
@@ -774,13 +773,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Formatação automática dos campos
+       
             formatarCPF(document.getElementById('cpfInput'));
             formatarTelefone(document.getElementById('telefoneInput'));
             formatarCEP(document.getElementById('cepInput'));
             formatarDinheiro(document.getElementById('depositoInput'));
 
-            // Mostrar/ocultar senha
+ 
             document.querySelectorAll('.password-toggle').forEach(button => {
                 button.addEventListener('click', function() {
                     const targetId = this.getAttribute('data-target');
@@ -795,13 +794,12 @@
                 });
             });
 
-            // Verificar senha em tempo real
             const confirmSenhaInput = document.getElementById('confirmSenhaInput');
             if (confirmSenhaInput) {
                 confirmSenhaInput.addEventListener('input', validateStep1);
             }
 
-            // Efeitos de foco nos inputs
+    
             document.querySelectorAll('.form-input-register, .form-select-register').forEach(input => {
                 const container = input.closest('.input-container-register');
                 
@@ -818,10 +816,10 @@
                 });
             });
 
-            // Inicializar barra de progresso
+   
             updateProgressBar();
 
-            // Validação final do formulário
+
             const registerForm = document.getElementById('registerForm');
             if (registerForm) {
                 registerForm.addEventListener('submit', function(e) {
@@ -837,7 +835,7 @@
                         return false;
                     }
 
-                    // Efeito de carregamento
+                  
                     const submitBtn = this.querySelector('.btn-submit');
                     const originalText = submitBtn.innerHTML;
                     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
@@ -847,7 +845,7 @@
                 });
             }
 
-            // Funções de formatação
+        
             function formatarCPF(input) {
                 if (!input) return;
                 input.addEventListener('input', function(e) {
@@ -911,7 +909,7 @@
                 });
             }
 
-            // Efeito hover no ícone
+   
             const registerIcon = document.querySelector('.register-icon');
             if (registerIcon) {
                 registerIcon.addEventListener('mouseenter', function() {

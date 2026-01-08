@@ -8,16 +8,11 @@ namespace BankSystem.Application.Services.Implementations;
 public class InvestimentoService : IInvestimentoService
 {
     private readonly IUnityOfWork _uow;
-    private readonly IMarketDataService _market;
 
-    public InvestimentoService(
-        IUnityOfWork uow,
-        IMarketDataService market)
+    public InvestimentoService(IUnityOfWork uow)
     {
         _uow = uow;
-        _market = market;
     }
-
 
     public async Task ComprarAsync(
         int usuarioId,
@@ -27,11 +22,10 @@ public class InvestimentoService : IInvestimentoService
         if (quantidade <= 0)
             throw new Exception("Quantidade inválida");
 
-        var conta =
-            await _uow.Contas.GetContasByUsuarioIdAndTipo(
+        var conta = await _uow.Contas
+            .GetContasByUsuarioIdAndTipo(
                 usuarioId,
-                TipoConta.INVESTIMENTO
-            );
+                TipoConta.INVESTIMENTO);
 
         if (conta == null)
             throw new Exception("Conta de investimento não encontrada");
@@ -41,10 +35,7 @@ public class InvestimentoService : IInvestimentoService
         if (ativo == null)
             throw new Exception("Ativo inválido");
 
- 
-        var precoAtual = await _market.ObterPrecoAsync(ativo.Simbolo);
-        ativo.AtualizarPreco(precoAtual);
-        _uow.Ativos.Update(ativo);
+        var precoAtual = ativo.PrecoAtual;
 
         var valorTotal = precoAtual * quantidade;
 
@@ -72,14 +63,12 @@ public class InvestimentoService : IInvestimentoService
         await _uow.CommitAsync();
     }
 
-
     public async Task<IEnumerable<Investimento>> ObterCarteiraAsync(int usuarioId)
     {
-        var conta =
-            await _uow.Contas.GetContasByUsuarioIdAndTipo(
+        var conta = await _uow.Contas
+            .GetContasByUsuarioIdAndTipo(
                 usuarioId,
-                TipoConta.INVESTIMENTO
-            );
+                TipoConta.INVESTIMENTO);
 
         if (conta == null)
             throw new Exception("Conta de investimento não encontrada");
@@ -87,7 +76,6 @@ public class InvestimentoService : IInvestimentoService
         return await _uow.Investimentos
             .ObterPorContaAsync(conta.Id);
     }
-
 
     public async Task VenderAsync(
         int usuarioId,
@@ -97,8 +85,8 @@ public class InvestimentoService : IInvestimentoService
         if (quantidade <= 0)
             throw new Exception("Quantidade inválida");
 
-        var investimento =
-            await _uow.Investimentos.GetByIdAsync(investimentoId);
+        var investimento = await _uow.Investimentos
+            .GetByIdAsync(investimentoId);
 
         if (investimento == null)
             throw new Exception("Investimento não encontrado");
@@ -116,9 +104,7 @@ public class InvestimentoService : IInvestimentoService
         if (ativo == null)
             throw new Exception("Ativo não encontrado");
 
-        var precoAtual = await _market.ObterPrecoAsync(ativo.Simbolo);
-        ativo.AtualizarPreco(precoAtual);
-        _uow.Ativos.Update(ativo);
+        var precoAtual = ativo.PrecoAtual;
 
         var valorVenda = precoAtual * quantidade;
 

@@ -1,27 +1,643 @@
-﻿@model IEnumerable<BankSystem.Domain.Model.Investimento>
+﻿@model IEnumerable<BankSystem.Domain.Model.Ativo>
+@{
+    ViewData["Title"] = "Investimentos | Gold Guard";
+    var carteira = ViewBag.Carteira as IEnumerable<BankSystem.Domain.Model.Investimento>;
+}
 
-<h3>📈 Meus Investimentos</h3>
-
-<a asp-action="Perfis" class="btn btn-primary mt-3">
-    ➕ Investir
-</a>
-
-<table class="table mt-4">
-    <thead>
-        <tr>
-            <th>Ativo</th>
-            <th>Quantidade</th>
-            <th>Valor</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var inv in Model)
-        {
-            <tr>
-                <td>@inv.Ativo.Nome</td>
-                <td>@inv.Quantidade</td>
-                <td>R$ @inv.PrecoCompra.ToString("N2")</td>
-            </tr>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #D4AF37;
+            --green: #28a745;
+            --green-dark: #218838;
+            --red: #D32F2F;
+            --red-dark: #B71C1C;
+            --black: #212121;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray: #E0E0E0;
+            --gray-dark: #757575;
         }
-    </tbody>
-</table>
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, var(--gray-light) 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .investimentos-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 40px;
+        }
+
+       
+        .header-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .voltar-header {
+            position: absolute;
+            left: 0;
+            top: -10px;
+            z-index: 10;
+        }
+
+        .btn-voltar-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+            .btn-voltar-header:hover {
+                background: var(--gray);
+                color: var(--green);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                border-color: var(--gold);
+            }
+
+            .btn-voltar-header i {
+                font-size: 20px;
+            }
+
+        
+        .investimentos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gray-light);
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-left: 60px;
+        }
+
+        .investimentos-title h1 {
+            color: var(--black);
+            font-weight: 700;
+            font-size: 28px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+            .investimentos-title h1 span {
+                color: var(--gold-dark);
+            }
+
+        .investimentos-title p {
+            color: var(--gray-dark);
+            margin: 8px 0 0 0;
+            font-size: 15px;
+        }
+
+        
+        .alert-custom {
+            border-radius: 15px;
+            border: none;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(33, 136, 56, 0.05) 100%);
+            border-left: 4px solid var(--green);
+            color: var(--green-dark);
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, rgba(23, 162, 184, 0.1) 0%, rgba(19, 132, 150, 0.05) 100%);
+            border-left: 4px solid var(--gold);
+            color: var(--gray-dark);
+        }
+
+       
+        .carteira-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.5s ease-out 0.1s both;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-size: 20px;
+        }
+
+        .section-title {
+            color: var(--black);
+            font-weight: 600;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+            .table-custom thead {
+                background: linear-gradient(135deg, var(--black) 0%, #333333 100%);
+            }
+
+            .table-custom th {
+                padding: 20px;
+                text-align: left;
+                color: var(--white);
+                font-weight: 600;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border: none;
+            }
+
+            .table-custom tbody tr {
+                transition: all 0.2s;
+                border-bottom: 1px solid var(--gray-light);
+            }
+
+                .table-custom tbody tr:hover {
+                    background: rgba(255, 215, 0, 0.05);
+                    transform: translateX(5px);
+                }
+
+            .table-custom td {
+                padding: 20px;
+                color: var(--black);
+                font-size: 15px;
+                border: none;
+                vertical-align: middle;
+            }
+
+        .badge-custom {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-success {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+       
+        .ativos-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.5s ease-out 0.2s both;
+        }
+
+        
+        .ativos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .ativo-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+            .ativo-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(212, 175, 55, 0.1);
+                border-color: var(--gold);
+            }
+
+        .ativo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .ativo-nome {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--black);
+            margin: 0;
+        }
+
+        .ativo-simbolo {
+            color: var(--gray-dark);
+            font-size: 14px;
+            background: var(--gray-light);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .ativo-preco {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 25px;
+        }
+
+        
+        .compra-form {
+            margin-top: 20px;
+        }
+
+        .input-group-compra {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-icon-compra {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+            z-index: 2;
+        }
+
+        .input-compra {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            font-size: 16px;
+            background: var(--white);
+            color: var(--black);
+            transition: all 0.3s;
+        }
+
+            .input-compra:focus {
+                outline: none;
+                border-color: var(--green);
+                box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+            }
+
+            .input-compra:hover {
+                border-color: var(--gold);
+            }
+
+        .btn-comprar {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+            .btn-comprar:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+            }
+
+        
+        .carteira-vazia {
+            text-align: center;
+            padding: 50px 30px;
+            color: var(--gray-dark);
+        }
+
+        .carteira-vazia-icon {
+            font-size: 48px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .carteira-vazia-text {
+            font-size: 16px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="investimentos-container">
+        
+        <div class="header-container">
+            <div class="voltar-header">
+                <a asp-controller="Home" asp-action="Index" class="btn-voltar-header" title="Voltar para Dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+
+          
+            <div class="investimentos-header">
+                <div class="investimentos-title">
+                    <h1><i class="fas fa-chart-line"></i> Investimentos <span>Gold Guard</span></h1>
+                    <p>Gerencie sua carteira de investimentos com segurança</p>
+                </div>
+            </div>
+        </div>
+
+       
+        @if (TempData["Sucesso"] != null)
+        {
+            <div class="alert-custom alert-success">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-3" style="font-size: 20px;"></i>
+                    <div>
+                        <strong>Sucesso!</strong> @TempData["Sucesso"]
+                    </div>
+                </div>
+            </div>
+        }
+
+        
+        <div class="carteira-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3 class="section-title">Minha Carteira</h3>
+            </div>
+
+            @if (carteira != null && carteira.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-chart-bar me-2"></i> Ativo</th>
+                                <th><i class="fas fa-layer-group me-2"></i> Quantidade</th>
+                                <th><i class="fas fa-tag me-2"></i> Preço de Compra</th>
+                                <th><i class="fas fa-bolt me-2"></i> Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var inv in carteira)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: var(--black); font-weight: 600;">
+                                                @inv.Ativo.Nome.Substring(0, 1)
+                                            </div>
+                                            <div>
+                                                <strong>@inv.Ativo.Nome</strong>
+                                                <div style="font-size: 12px; color: var(--gray-dark);">@inv.Ativo.Simbolo</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold">@inv.Quantidade.ToString("N2")</span>
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold text-primary">R$ @inv.PrecoCompra.ToString("N2")</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-custom badge-success">
+                                            <i class="fas fa-chart-line"></i> Rendendo
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="carteira-vazia">
+                    <div class="carteira-vazia-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h4 style="color: var(--gray-dark); margin-bottom: 10px;">Carteira vazia</h4>
+                    <p class="carteira-vazia-text">
+                        Você ainda não possui investimentos. Comece investindo agora mesmo nos ativos disponíveis abaixo!
+                    </p>
+                </div>
+            }
+        </div>
+
+        
+        <div class="ativos-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h3 class="section-title">Ativos Disponíveis para Investimento</h3>
+            </div>
+
+            <div class="ativos-grid">
+                @foreach (var ativo in Model)
+                {
+                    <div class="ativo-card">
+                        <div class="ativo-header">
+                            <div>
+                                <h4 class="ativo-nome">@ativo.Nome</h4>
+                                <span class="ativo-simbolo">@ativo.Simbolo</span>
+                            </div>
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 18px;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+
+                        <div class="ativo-preco">
+                            R$ @ativo.PrecoAtual.ToString("N2")
+                        </div>
+
+                        <form asp-action="Comprar" method="post" class="compra-form">
+                            <input type="hidden" name="ativoId" value="@ativo.Id" />
+
+                            <div class="input-group-compra">
+                                <div class="input-icon-compra">
+                                    <i class="fas fa-layer-group"></i>
+                                </div>
+                                <input type="number"
+                                       name="quantidade"
+                                       step="0.01"
+                                       min="0.01"
+                                       class="input-compra"
+                                       placeholder="Quantidade"
+                                       required />
+                            </div>
+
+                            <button type="submit" class="btn-comprar">
+                                <i class="fas fa-shopping-cart"></i> Comprar Ativo
+                            </button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+           
+            const quantidadeInputs = document.querySelectorAll('input[name="quantidade"]');
+
+            quantidadeInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    
+                    if (parseFloat(this.value) < 0.01) {
+                        this.value = 0.01;
+                    }
+                });
+
+                
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = 'var(--green)';
+                    this.parentElement.querySelector('.input-icon-compra').style.color = 'var(--green)';
+                });
+
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = '';
+                    this.parentElement.querySelector('.input-icon-compra').style.color = 'var(--gray-dark)';
+                });
+            });
+
+            
+            const compraForms = document.querySelectorAll('.compra-form');
+
+            compraForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const quantidadeInput = this.querySelector('input[name="quantidade"]');
+                    const quantidade = parseFloat(quantidadeInput.value);
+
+                    if (isNaN(quantidade) || quantidade < 0.01) {
+                        e.preventDefault();
+                        alert('Por favor, informe uma quantidade válida (mínimo 0.01).');
+                        quantidadeInput.focus();
+                        return false;
+                    }
+
+                    const ativoNome = this.closest('.ativo-card').querySelector('.ativo-nome').textContent;
+
+                    if (!confirm(`Confirmar compra de ${quantidade} unidade(s) do ativo "${ativoNome}"?`)) {
+                        e.preventDefault();
+                        return false;
+                    }
+
+                   
+                    const btnComprar = this.querySelector('.btn-comprar');
+                    const originalText = btnComprar.innerHTML;
+                    btnComprar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+                    btnComprar.disabled = true;
+
+                    return true;
+                });
+            });
+
+            
+            const tabelaLinhas = document.querySelectorAll('.table-custom tbody tr');
+            tabelaLinhas.forEach(linha => {
+                linha.addEventListener('mouseenter', function() {
+                    this.style.transition = 'transform 0.2s ease';
+                });
+
+                linha.addEventListener('mouseleave', function() {
+                    setTimeout(() => {
+                        this.style.transform = 'translateX(0)';
+                    }, 100);
+                });
+            });
+
+            
+            const ativoCards = document.querySelectorAll('.ativo-card');
+            ativoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('.fa-chart-line');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.1)';
+                        icon.style.transition = 'transform 0.3s ease';
+                    }
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('.fa-chart-line');
+                    if (icon) {
+                        icon.style.transform = 'scale(1)';
+                    }
+                });
+            });
+
+           
+            const alertas = document.querySelectorAll('.alert-custom');
+            alertas.forEach(alerta => {
+                setTimeout(() => {
+                    if (alerta) {
+                        alerta.style.transition = 'opacity 0.5s ease';
+                        alerta.style.opacity = '0';
+                        setTimeout(() => {
+                            if (alerta.parentNode) {
+                                alerta.parentNode.removeChild(alerta);
+                            }
+                        }, 500);
+                    }
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -15,14 +15,5 @@ public class AtivoRepository : GenericRepository<Ativo>, IAtivoRepository
         return await _dbSet.FirstOrDefaultAsync(a => a.Simbolo == simbolo);
     }
 
-    public async Task<IEnumerable<Ativo>> ObterPorPerfilAsync(PerfilInvestimento perfil)
-    {
-        return await _context.Set<AtivoPerfil>()
-            .Include(ap => ap.Ativo)
-            .Where(ap => ap.Perfil == perfil)
-            .Select(ap => ap.Ativo)
-            .Distinct()
-            .ToListAsync();
-    }
-
+    
 }

@@ -3,7 +3,6 @@ using BankSystem.Application.Services.Implementations;
 using BankSystem.Application.Services.Interfaces;
 using BankSystem.Domain.Repositories.Interfaces;
 using BankSystem.Infraestructure.Context;
-using BankSystem.Infraestructure.Integrations;
 using BankSystem.Infraestructure.Persistence;
 using BankSystem.Infraestructure.Repositories.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,12 +21,7 @@ b => b.MigrationsAssembly("BankSystem.Infraestructure")
 );
 
 
-builder.Services.AddHttpClient<AlphaVantageClient>(client =>
-{
-    client.BaseAddress = new Uri(
-        builder.Configuration["AlphaVantage:BaseUrl"]
-    );
-});
+
 
 
 
@@ -44,7 +38,7 @@ builder.Services.AddScoped<IAtivoRepository, AtivoRepository>();
 
 
 
-builder.Services.AddScoped<IMarketDataService, MarketDataService>();
+
 
 
 builder.Services.AddAuthentication(options =>

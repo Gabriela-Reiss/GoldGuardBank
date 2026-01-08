@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -59,7 +59,7 @@
             position: relative;
         }
 
-        /* Header com botão de voltar */
+       
         .transferencia-header {
             text-align: center;
             margin-bottom: 30px;
@@ -135,12 +135,12 @@
             margin-right: auto;
         }
 
-        /* Formulário */
+   
         .transferencia-form {
             width: 100%;
         }
 
-        /* Campos do formulário */
+       
         .form-group-transferencia {
             margin-bottom: 25px;
         }
@@ -193,7 +193,7 @@
                 opacity: 0.7;
             }
 
-        /* Input de valor com prefixo */
+  
         .valor-input-group {
             position: relative;
             width: 100%;
@@ -234,7 +234,7 @@
                 border-color: var(--gold);
             }
 
-        /* Botão de transferência */
+       
         .btn-transferencia {
             width: 100%;
             padding: 18px;
@@ -265,7 +265,7 @@
                 box-shadow: none;
             }
 
-        /* Informações da transferência */
+    
         .info-transferencia {
             background: rgba(255, 215, 0, 0.05);
             border: 2px solid var(--gold);
@@ -295,7 +295,7 @@
             margin-bottom: 0;
         }
 
-        /* Validação */
+     
         .validation-error {
             color: var(--red);
             font-size: 13px;
@@ -316,7 +316,7 @@
 <body>
     <div class="centralized-container">
         <div class="transferencia-card">
-            <!-- Cabeçalho com ícone de voltar -->
+          
             <div class="transferencia-header">
                 <div class="voltar-header">
                     <a asp-controller="Home" asp-action="Index" class="btn-voltar-header" title="Voltar para Dashboard">
@@ -337,7 +337,7 @@
             <form asp-controller="Transacao" asp-action="Transferencia" method="post" id="transferenciaForm">
                 @Html.AntiForgeryToken()
 
-                <!-- Conta destino -->
+              
                 <div class="form-group-transferencia">
                     <label class="form-label-transferencia">Número da conta destino</label>
                     <div class="input-container">
@@ -356,7 +356,6 @@
                     </div>
                 </div>
 
-                <!-- Valor -->
                 <div class="form-group-transferencia">
                     <label class="form-label-transferencia">Valor da transferência</label>
                     <div class="valor-input-group">
@@ -375,12 +374,12 @@
                     </div>
                 </div>
 
-                <!-- Botão de transferência -->
+                
                 <button type="submit" class="btn-transferencia" id="btnTransferencia">
                     <i class="fas fa-paper-plane"></i> Confirmar Transferência
                 </button>
 
-                <!-- Informações -->
+             
                 <div class="info-transferencia">
                     <div class="info-title">
                         <i class="fas fa-info-circle"></i> Importante
@@ -394,7 +393,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const valorInput = document.getElementById('valorInput');
@@ -403,7 +402,7 @@
             const contaError = document.getElementById('contaError');
             const btnTransferencia = document.getElementById('btnTransferencia');
 
-            // Formatação do input de valor
+
             if (valorInput) {
                 valorInput.addEventListener('input', function(e) {
                     let value = e.target.value.replace(/\D/g, '');
@@ -427,7 +426,7 @@
                 });
             }
 
-            // Validação do número da conta
+          
             if (numeroContaInput) {
                 numeroContaInput.addEventListener('input', function() {
                     validateInputs();
@@ -442,11 +441,11 @@
                 });
             }
 
-            // Validação dos inputs
+            
             function validateInputs() {
                 let isValid = true;
 
-                // Validar valor
+              
                 const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
 
                 if (isNaN(valor) || valor < 0.01) {
@@ -458,7 +457,7 @@
                     valorError.style.display = 'none';
                 }
 
-                // Validar número da conta
+                
                 const conta = numeroContaInput.value.trim();
 
                 if (conta.length < 3 || !/^\d+$/.test(conta)) {
@@ -470,12 +469,12 @@
                     contaError.style.display = 'none';
                 }
 
-                // Habilitar/desabilitar botão
+               
                 btnTransferencia.disabled = !isValid;
                 return isValid;
             }
 
-            // Validação do formulário
+            
             const transferenciaForm = document.getElementById('transferenciaForm');
             transferenciaForm.addEventListener('submit', function(e) {
                 if (!validateInputs()) {
@@ -487,7 +486,7 @@
                 const valor = parseFloat(valorInput.value.replace(/\./g, '').replace(',', '.'));
                 const conta = numeroContaInput.value.trim();
 
-                // Confirmação para valores altos
+                
                 if (valor > 500) {
                     if (!confirm(`Tem certeza que deseja transferir R$ ${valor.toFixed(2).replace('.', ',')} para a conta ${conta}?\n\nEsta é uma quantia considerável.`)) {
                         e.preventDefault();
@@ -495,14 +494,14 @@
                     }
                 }
 
-                // Efeito de carregamento
+                
                 btnTransferencia.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
                 btnTransferencia.disabled = true;
 
                 return true;
             });
 
-            // Inicializar validação
+      
             validateInputs();
         });
     </script>

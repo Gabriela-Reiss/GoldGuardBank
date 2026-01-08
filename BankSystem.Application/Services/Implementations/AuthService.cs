@@ -1,4 +1,5 @@
 ﻿using BankSystem.Application.DTOs;
+using BankSystem.Application.Exceptions;
 using BankSystem.Application.Services.Interfaces;
 using BankSystem.Domain.Model;
 using BankSystem.Domain.Model.Enums;
@@ -22,7 +23,7 @@ public class AuthService : IAuthService
         var login = _uow.Logins.GetByCpf(dto.CPF);
 
         if (login == null || !login.ValidarSenha(dto.Senha))
-            throw new Exception("Credenciais inválidas");
+            throw new CredencialInvalidaException();
 
         return _jwt.GerarToken(login.Usuario);
     }
@@ -30,11 +31,9 @@ public class AuthService : IAuthService
     public async Task RegistryAsync(RegistroUsuarioDto dto)
     {
         if (_uow.Logins.GetByCpf(dto.CPF) != null)
-            throw new Exception("CPF já cadastrado");
+            throw new CpfJaCadastradoException();
 
-        // =====================
-        // USUÁRIO
-        // =====================
+
         var usuario = new Usuario
         {
             Nome = dto.Nome,
@@ -52,9 +51,7 @@ public class AuthService : IAuthService
             }
         };
 
-        // =====================
-        // CONTA
-        // =====================
+
         var conta = new Conta
         {
             Usuario = usuario,
@@ -62,9 +59,7 @@ public class AuthService : IAuthService
             DataCriacao = DateTime.Now
         };
 
-        // =====================
-        // LOGIN
-        // =====================
+
         var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha);
 
         var login = new Login(
@@ -73,16 +68,11 @@ public class AuthService : IAuthService
             usuario
         );
 
-        // =====================
-        // PERSISTÊNCIA
-        // =====================
         await _uow.Usuarios.AddAsync(usuario);
         await _uow.Contas.AddAsync(conta);
         await _uow.Logins.AddAsync(login);
 
-        // =====================
-        // DEPÓSITO INICIAL (TRANSAÇÃO)
-        // =====================
+ 
         if (dto.DepositoInicial is > 0)
         {
             var depositoInicial = Transacao.Criar(

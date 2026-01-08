@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- jsPDF para geração de PDF -->
@@ -48,7 +48,7 @@
             padding-top: 40px;
         }
 
-        /* Header com botão de voltar */
+     
         .header-container {
             position: relative;
             margin-bottom: 30px;
@@ -87,7 +87,6 @@
                 font-size: 20px;
             }
 
-        /* Header do Extrato */
         .extrato-header {
             display: flex;
             justify-content: space-between;
@@ -171,7 +170,7 @@
                 background: var(--gray);
             }
 
-        /* Card de Resumo - Sem saldo atual */
+      
         .resumo-card {
             background: linear-gradient(135deg, var(--black) 0%, #333333 100%);
             border-radius: 20px;
@@ -218,7 +217,7 @@
             color: var(--gold);
         }
 
-        /* Filtros */
+  
         .filtros-container {
             background: var(--white);
             border-radius: 15px;
@@ -289,7 +288,7 @@
                 box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
             }
 
-        /* Tabela de Extrato */
+   
         .extrato-table-container {
             background: var(--white);
             border-radius: 15px;
@@ -407,7 +406,7 @@
 </head>
 <body>
     <div class="extrato-container">
-        <!-- Header com botão de voltar -->
+  
         <div class="header-container">
             <div class="voltar-header">
                 <a asp-controller="Home" asp-action="Index" class="btn-voltar-header" title="Voltar para Dashboard">
@@ -415,7 +414,7 @@
                 </a>
             </div>
 
-            <!-- Header do Extrato -->
+          
             <div class="extrato-header">
                 <div class="extrato-title">
                     <h1><i class="fas fa-file-alt"></i> Extrato <span>Gold Guard</span></h1>
@@ -433,7 +432,7 @@
             </div>
         </div>
 
-        <!-- Card de Resumo - Somente total de transações e período -->
+    
         <div class="resumo-card">
             <div class="resumo-stats">
                 <div class="stat-item">
@@ -459,7 +458,7 @@
             </div>
         </div>
 
-        <!-- Filtros (Oculto inicialmente) -->
+   
         <div class="filtros-container" id="filtrosContainer">
             <div class="filtros-header">
                 <h3 class="filtros-title">Filtrar Transações</h3>
@@ -495,7 +494,7 @@
             </button>
         </div>
 
-        <!-- Tabela de Extrato -->
+       
         <div class="extrato-table-container">
             <div class="table-header">
                 <h3><i class="fas fa-list"></i> Histórico de Transações</h3>
@@ -566,11 +565,11 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        // Inicialização
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar datas padrão nos filtros
+           
             const hoje = new Date().toISOString().split('T')[0];
             const umMesAtras = new Date();
             umMesAtras.setMonth(umMesAtras.getMonth() - 1);
@@ -579,42 +578,42 @@
             document.getElementById('dataInicio').value = umMesAtrasFormatado;
             document.getElementById('dataFim').value = hoje;
 
-            // Ocultar filtros inicialmente
+    
             document.getElementById('filtrosContainer').style.display = 'none';
 
-            // Adicionar evento para o botão de filtros
+     
             document.getElementById('toggleFiltros').addEventListener('click', toggleFiltros);
 
-            // Adicionar evento para download de PDF
+  
             document.getElementById('downloadPDF').addEventListener('click', baixarPDFCompleto);
         });
 
-        // Toggle filtros
+   
         function toggleFiltros() {
             const filtrosContainer = document.getElementById('filtrosContainer');
             filtrosContainer.style.display = filtrosContainer.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Aplicar filtros
+      
         function aplicarFiltros() {
             alert('Filtros aplicados! (Funcionalidade completa seria implementada com backend)');
             toggleFiltros();
         }
 
-        // Função para baixar PDF simplificado - sem saldo e sem dados da conta
+       
         async function baixarPDFCompleto() {
             const downloadBtn = document.getElementById('downloadPDF');
             const originalText = downloadBtn.innerHTML;
 
             try {
-                // Mostrar indicador de carregamento
+            
                 downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando PDF...';
                 downloadBtn.disabled = true;
 
-                // Aguardar um pouco para garantir que o DOM esteja pronto
+           
                 await new Promise(resolve => setTimeout(resolve, 100));
 
-                // Verificar se jsPDF está carregado
+              
                 if (typeof window.jspdf === 'undefined') {
                     throw new Error('Biblioteca jsPDF não carregada. Verifique sua conexão.');
                 }
@@ -623,14 +622,14 @@
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pageWidth = pdf.internal.pageSize.getWidth();
 
-                // Configurações do PDF
+         
                 pdf.setFont('helvetica');
                 pdf.setFontSize(10);
 
-                // Cabeçalho do documento
+              
                 let yPos = 20;
 
-                // Título
+            
                 pdf.setFontSize(20);
                 pdf.setTextColor(33, 33, 33);
                 pdf.text('EXTRATO DE TRANSAÇÕES', pageWidth / 2, yPos, { align: 'center' });
@@ -645,13 +644,13 @@
 
                
 
-                // Informações do resumo (apenas total de transações)
+            
                 yPos += 15;
                 pdf.setFontSize(11);
                 pdf.setTextColor(33, 33, 33);
                 pdf.text(`Total de Transações: ${document.querySelector('.stat-value').textContent}`, 20, yPos);
 
-                // Cabeçalho da tabela
+            
                 yPos += 15;
                 pdf.setFontSize(11);
                 pdf.setTextColor(255, 255, 255);
@@ -664,12 +663,12 @@
 
                 yPos += 6;
 
-                // Linhas da tabela
+            
                 pdf.setFontSize(9);
                 const rows = document.querySelectorAll('.extrato-table tbody tr');
                 let transactionCount = 0;
 
-                // Criar array de transações
+               
                 const transactions = Array.from(rows).map(row => {
                     const cells = row.querySelectorAll('td');
                     const dateTime = cells[0].querySelector('.data-completa').textContent + ' ' +
@@ -681,14 +680,14 @@
                     return { dateTime, type, description, value };
                 });
 
-                // Adicionar transações ao PDF
+             
                 for (const transaction of transactions) {
-                    // Verificar se precisa de nova página
+                   
                     if (yPos > 270) {
                         pdf.addPage();
                         yPos = 20;
 
-                        // Replicar cabeçalho da tabela em nova página
+                    
                         pdf.setFontSize(11);
                         pdf.setTextColor(255, 255, 255);
                         pdf.setFillColor(33, 33, 33);
@@ -700,40 +699,39 @@
                         yPos += 6;
                     }
 
-                    // Alternar cores das linhas
+             
                     pdf.setTextColor(33, 33, 33);
                     if (transactionCount % 2 === 0) {
                         pdf.setFillColor(245, 245, 245);
                         pdf.rect(20, yPos - 2, pageWidth - 40, 6, 'F');
                     }
 
-                    // Adicionar dados
                     pdf.text(transaction.dateTime, 25, yPos);
                     pdf.text(transaction.type, 60, yPos);
 
-                    // Truncar descrição muito longa
+                
                     let desc = transaction.description;
                     if (desc.length > 40) {
                         desc = desc.substring(0, 37) + '...';
                     }
                     pdf.text(desc, 90, yPos);
 
-                    // Valor com cor baseada no tipo
+                 
                     if (transaction.value.includes('-')) {
-                        pdf.setTextColor(211, 47, 47); // Vermelho para saídas
+                        pdf.setTextColor(211, 47, 47); 
                     } else {
-                        pdf.setTextColor(40, 167, 69); // Verde para entradas
+                        pdf.setTextColor(40, 167, 69); 
                     }
                     pdf.text(transaction.value, pageWidth - 25, yPos, { align: 'right' });
 
                     yPos += 8;
                     transactionCount++;
 
-                    // Resetar cor do texto
+                    
                     pdf.setTextColor(33, 33, 33);
                 }
 
-                // Rodapé simples
+       
                 yPos += 10;
                 pdf.setFontSize(10);
                 pdf.setTextColor(117, 117, 117);
@@ -742,13 +740,13 @@
                 yPos += 10;
                 pdf.text('Documento gerado automaticamente pelo sistema Gold Guard Bank', pageWidth / 2, yPos, { align: 'center' });
 
-                // Gerar nome do arquivo
+            
                 const fileName = `Extrato_Transacoes_${new Date().getFullYear()}${(new Date().getMonth() + 1).toString().padStart(2, '0')}${new Date().getDate().toString().padStart(2, '0')}.pdf`;
 
-                // Salvar PDF
+         
                 pdf.save(fileName);
 
-                // Feedback visual de sucesso
+             
                 downloadBtn.innerHTML = '<i class="fas fa-check"></i> PDF Baixado!';
                 downloadBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #218838 100%)';
 
@@ -761,7 +759,7 @@
             } catch (error) {
                 console.error('Erro ao gerar PDF:', error);
 
-                // Feedback visual de erro
+             
                 downloadBtn.innerHTML = '<i class="fas fa-times"></i> Erro ao gerar';
                 downloadBtn.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
 
@@ -775,7 +773,7 @@
             }
         }
 
-        // Efeitos de hover nas linhas da tabela
+      
         document.querySelectorAll('.extrato-table tbody tr').forEach(row => {
             row.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateX(5px)';

@@ -8,13 +8,17 @@ public class Ativo
     public string Nome { get; set; } = null!;
     public string Simbolo { get; set; } = null!;
     public TipoAtivo Tipo { get; set; }
-    public decimal PrecoAtual { get; private set; }
+    public decimal PrecoAtual { get;  set; }
 
-    public ICollection<AtivoPerfil> Perfis { get; set; } = new List<AtivoPerfil>();
 
-    public void AtualizarPreco(decimal preco)
+
+
+    public void AtualizarPreco(decimal novoPreco)
     {
-        PrecoAtual = preco;
+        if (novoPreco <= 0)
+            throw new Exception("Preço inválido");
+
+        PrecoAtual = novoPreco;
     }
 }
 

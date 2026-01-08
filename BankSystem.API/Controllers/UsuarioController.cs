@@ -1,4 +1,5 @@
 ﻿using BankSystem.Application.DTOs;
+using BankSystem.Application.Exceptions;
 using BankSystem.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +24,19 @@ public class UsuarioController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegistroUsuarioDto dto)
     {
-        await _service.RegistryAsync(dto);
-        return RedirectToAction("Index", "Login");
+        if (!ModelState.IsValid)
+            return View(dto);
+
+        try
+        {
+            await _service.RegistryAsync(dto);
+            return RedirectToAction("Index", "Login");
+        }
+        catch (CpfJaCadastradoException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(dto);
+        }
     }
 
 }

@@ -3864,6 +3864,7 @@
     "net8.0": [
       "BCrypt.Net-Next >= 4.0.3",
       "BankSystem.Application >= 1.0.0",
+      "BankSystem.Domain >= 1.0.0",
       "BankSystem.Infraestructure >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.22",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.22",
@@ -3905,6 +3906,9 @@
           "projectReferences": {
             "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Application\\BankSystem.Application.csproj": {
               "projectPath": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Application\\BankSystem.Application.csproj"
+            },
+            "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\BankSystem.Domain.csproj": {
+              "projectPath": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Domain\\BankSystem.Domain.csproj"
             },
             "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Infraestructure\\BankSystem.Infraestructure.csproj": {
               "projectPath": "C:\\Users\\gabis\\source\\repos\\BankSystem\\BankSystem.Infraestructure\\BankSystem.Infraestructure.csproj"

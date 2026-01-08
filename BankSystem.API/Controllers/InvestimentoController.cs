@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using BankSystem.Application.Services.Interfaces;
-using BankSystem.Domain.Model.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,33 +19,27 @@ public class InvestimentoController : Controller
         _ativoService = ativoService;
     }
 
-    // 📌 Carteira do usuário
+
+
+
+
     public async Task<IActionResult> Index()
     {
         var userId = int.Parse(
             User.FindFirst(ClaimTypes.NameIdentifier)!.Value
         );
 
+        var ativos = await _ativoService.ObterAtivosAsync();
         var carteira = await _investimentoService.ObterCarteiraAsync(userId);
-        return View(carteira);
-    }
 
-    // 📌 Tela de escolha do perfil
-    [HttpGet]
-    public IActionResult Perfis()
-    {
-        return View();
-    }
+        ViewBag.Carteira = carteira;
 
-    // 📌 Consulta de ativos (API)
-    [HttpGet]
-    public async Task<IActionResult> Ativos(PerfilInvestimento perfil)
-    {
-        var ativos = await _ativoService.ObterPorPerfilAsync(perfil);
         return View(ativos);
     }
 
-    // 📌 Compra de ativo (AÇÃO DE NEGÓCIO)
+
+
+
     [HttpPost]
     public async Task<IActionResult> Comprar(int ativoId, decimal quantidade)
     {
@@ -54,12 +47,11 @@ public class InvestimentoController : Controller
             User.FindFirst(ClaimTypes.NameIdentifier)!.Value
         );
 
-        await _investimentoService.ComprarAsync(
-            userId,
-            ativoId,
-            quantidade
-        );
+        await _investimentoService.ComprarAsync(userId, ativoId, quantidade);
+
+        TempData["Sucesso"] = "Investimento realizado com sucesso!";
 
         return RedirectToAction(nameof(Index));
     }
+
 }

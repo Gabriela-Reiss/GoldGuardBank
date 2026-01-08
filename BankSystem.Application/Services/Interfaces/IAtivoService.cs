@@ -7,8 +7,8 @@ public interface IAtivoService
 {
     Task<IEnumerable<Ativo>> ObterAtivosAsync();
     Task<Ativo?> ObterPorIdAsync(int id);
-    Task AtualizarPrecoAsync(int ativoId);
+ 
 
-    Task<IEnumerable<Ativo>> ObterPorPerfilAsync(PerfilInvestimento perfil);
+
 }
 

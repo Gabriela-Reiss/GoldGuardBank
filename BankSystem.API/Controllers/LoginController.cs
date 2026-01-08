@@ -1,4 +1,5 @@
 ﻿using BankSystem.Application.DTOs;
+using BankSystem.Application.Exceptions;
 using BankSystem.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,31 +20,50 @@ public class LoginController : Controller
         return View("Login");
     }
 
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginDto dto)
     {
-        var result =  await _service.LoginAsync(dto);
+        if (!ModelState.IsValid)
+            return View("Login", dto);
 
-        Response.Cookies.Append("jwt", result.Token, new CookieOptions
+        try
         {
-            HttpOnly = true,
-            Secure = Request.IsHttps,
-            SameSite = SameSiteMode.Strict,
-            Expires = result.ExpiraEm
-        });
+            var result = await _service.LoginAsync(dto);
 
-        return RedirectToAction("Index", "Home");
+            Response.Cookies.Append("jwt", result.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = Request.IsHttps,
+                SameSite = SameSiteMode.Strict,
+                Expires = result.ExpiraEm
+            });
+
+            return RedirectToAction("Index", "Home");
+        }
+        catch (CredencialInvalidaException)
+        {
+          
+            ModelState.AddModelError(string.Empty, "CPF ou senha inválidos");
+
+            return View("Login", dto);
+        }
+
+        catch (Exception)
+        {
+        
+            ModelState.AddModelError(
+                string.Empty,
+                "Erro inesperado. Tente novamente mais tarde."
+            );
+
+            return View("Login", dto);
+        }
     }
-
-    
 
     public IActionResult Logout()
     {
         Response.Cookies.Delete("jwt");
         return RedirectToAction("Index");
     }
-
-
 }
